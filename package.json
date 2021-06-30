@@ -1,0 +1,19 @@
+{
+  "name": "life-melody-server",
+  "version": "1.0.0",
+  "description": "node server for life-melody mobile application",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "npm start"
+  },
+  "author": "Ammar Al-Ahmad",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "morgan": "^1.10.0"
+  }
+}
