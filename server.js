@@ -4,7 +4,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 // var tasks = require('./routes/tasks');
-// var users= require('./routes/users').router;
+var users= require('./routes/users').router;
 var app = express();
 
 var session= require('express-session');
@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'life-melody-server')));
 
 
-// app.use('/api/tasks', tasks);
+app.use('/api/users', users);
 
 app.listen('3000',()=>{
   console.log("app is ready")
