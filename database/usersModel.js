@@ -21,3 +21,6 @@ const Users= sequelize.define('Users',{
 },{
     freezeTableName: true
 })
+
+
+console.log(Users === sequelize.models.Users);

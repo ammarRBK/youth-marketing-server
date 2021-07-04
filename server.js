@@ -1,11 +1,12 @@
 var express = require('express');
+var app = express();
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 // var tasks = require('./routes/tasks');
 var users= require('./routes/users').router;
-var app = express();
+var dbCon= require("./database/dbCon")
 
 var session= require('express-session');
 app.use(session({
@@ -24,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'life-melody-server')));
 
 app.use('/api/users', users);
 
-app.listen('3000',()=>{
+app.listen(process.env.PORT ||'3000',()=>{
   console.log("app is ready")
 })
 
