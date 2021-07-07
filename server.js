@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 // var tasks = require('./routes/tasks');
 var users= require('./routes/users').router;
-var dbCon= require("./database/dbCon")
+var db= require('./database/usersModel');
 
 var session= require('express-session');
 app.use(session({
@@ -20,7 +20,7 @@ app.use(session({
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
-app.use(express.static(path.join(__dirname, 'life-melody-server')));
+app.use(express.static(path.join(__dirname, './life-melody-server')));
 
 
 app.use('/api/users', users);
