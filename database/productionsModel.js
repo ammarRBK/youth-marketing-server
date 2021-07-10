@@ -8,11 +8,6 @@ const Productions= sequelize.define('productions',{
         autoIncrement: true,
         unique: true
     },
-    userId:{
-        type: DataTypes.INTEGER,
-        unique: true,
-        forignKey: true
-    },
     productTitle:{
         type: DataTypes.STRING(100),
         allowNull: false,
@@ -35,4 +30,4 @@ const Productions= sequelize.define('productions',{
     freezeTableName: true
 });
 
-module.exports= Productions
+module.exports= {Productions};

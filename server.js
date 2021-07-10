@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 // var tasks = require('./routes/tasks');
 var users= require('./routes/users').router;
-var db= require('./database/usersModel');
+var db= require('./database/dbsetup');
 
 var session= require('express-session');
 app.use(session({
