@@ -4,7 +4,7 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-// var tasks = require('./routes/tasks');
+var products = require('./routes/products').router;
 var users= require('./routes/users').router;
 var db= require('./database/dbsetup');
 
@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, './life-melody-server')));
 
 
 app.use('/api/users', users);
+app.use('/api/products',products);
 
 app.listen(process.env.PORT ||'3000',()=>{
   console.log("app is ready")

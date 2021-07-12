@@ -20,6 +20,6 @@ const Users= sequelize.define('users',{
     }
 },{
     freezeTableName: true
-})
+});
 
 module.exports={Users}
