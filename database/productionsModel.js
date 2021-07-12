@@ -5,7 +5,6 @@ var sequelize= require("./dbCon").sequelize;
 const Productions= sequelize.define('productions',{
     productId:{
         type: DataTypes.INTEGER,
-        autoIncrement: true,
         unique: true
     },
     productTitle:{
