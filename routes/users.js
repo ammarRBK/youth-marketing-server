@@ -4,6 +4,7 @@ var router= express.Router();
 var bcrypt= require('bcrypt');
 var db= require('../database/usersModel').Users;
 
+var userSession= {};
 var session= require('express-session');
 app.use(session({
   secret: 'keyboard cat',
@@ -62,10 +63,9 @@ router.post('/signin',(req,res)=>{
         }else{
             bcrypt.compare(password,user.password).then(result=>{
                 if (result) {
-                    var userSession={
-                        userName: user.userName,
-                        address: user.address
-                    };
+                    userSession.userId= user.userId;
+                    userSession.userName= user.userName;
+                    userSession.address= user.address; 
                     session.user= userSession;
                     res.send({message: "user Authintecated",user: userSession});
                 } else {
@@ -79,4 +79,9 @@ router.post('/signin',(req,res)=>{
     })
 });
 
-module.exports= {router};
+router.get('/logout',(req,res)=>{
+    userSession= {};
+    res.send({message: "logged out"});
+});
+
+module.exports= {router,userSession};
