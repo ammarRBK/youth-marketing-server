@@ -3,10 +3,6 @@ var sequelize= require("./dbCon").sequelize;
 
 
 const Productions= sequelize.define('productions',{
-    productId:{
-        type: DataTypes.INTEGER,
-        unique: true
-    },
     productTitle:{
         type: DataTypes.STRING(100),
         allowNull: false,
@@ -17,7 +13,11 @@ const Productions= sequelize.define('productions',{
         allowNull: false
     },
     productQuantity:{
-        type: DataTypes.FLOAT
+        type: DataTypes.FLOAT,
+        allowNull: false
+    },
+    availableUnits:{
+        type: DataTypes.INTEGER
     },
     productDate:{
         type: DataTypes.DATEONLY
