@@ -17,9 +17,9 @@ app.use(session({
 router.post('/signup',(req,res)=>{
     let userName= req.body.userName;
     let password= req.body.password;
-    let phoneNumber= req.body.phoneNumber;
+    let phoneNumber= req.body.phoneNumber || null;
     let address= req.body.address;
-    
+
     bcrypt.hash(password,15)
     .then((hashedPassword)=>{
         var newUser = {
@@ -45,6 +45,37 @@ router.post('/signup',(req,res)=>{
     })
     .catch(error =>{
         res.send(error);
+    })
+});
+
+
+router.post('/signin',(req,res)=>{
+    let userName= req.body.userName;
+    let password= req.body.password;
+
+    db.findOne({
+        where:{userName: userName}
+    }).then(user=>{
+        console.log("-------->user: ",user)
+        if(!user){
+            res.send({message: "user is not in database"})
+        }else{
+            bcrypt.compare(password,user.password).then(result=>{
+                if (result) {
+                    var userSession={
+                        userName: user.userName,
+                        address: user.address
+                    };
+                    session.user= userSession;
+                    res.send({message: "user Authintecated",user: userSession});
+                } else {
+                    res.send({message: "wrong password"});
+                }
+            })
+            .catch(err =>{
+                console.log("error in Comparing Password ", err);
+            })
+        }
     })
 });
 
