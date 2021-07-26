@@ -47,4 +47,30 @@ router.post('/deleteProduct',(req,res)=>{
   })
 });
 
+router.post('/editProduct',(req,res)=>{
+  let proId= req.body.productId;
+  let editedProduct= {
+    productTitle: req.body.productTitle,
+    productDisciption: req.body.productDisciption,
+    productQuantity: parseFloat(req.body.productQuantity),
+    availableUnits: req.body.availableUnits || 0,
+    productDate: new Date(req.body.productDate) || null,
+    expirationDate: new Date(req.body.expirationDate) || null,
+    userId: cliSession.userId
+  }
+
+  db.update(editedProduct,{
+    where:{
+      id: proId
+    }
+  }).then(success=>{
+    console.log("----->Edited '\n'",success)
+    res.send({message: "Product Edited successfully"});
+  }).catch(err=>{
+    console.log("-----> cannot Edit '\n'",err)
+    res.send({message: "cannot Edit"})
+  })
+
+})
+
 module.exports= {router};
