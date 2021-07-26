@@ -29,6 +29,22 @@ router.post('/addProduct',(req,res)=>{
     res.send({message:"cannot add the product '\n' "+err});
   })
   console.log(Production);
-})
+});
+
+router.post('/deleteProduct',(req,res)=>{
+  let proId= req.body.productId;
+
+  db.destroy({
+    where:{
+      id: proId
+    }
+  }).then(success=>{
+    console.log('------->deleted"\n"',success);
+    res.send({message: "Product deleted"});
+  }).catch(err=>{
+    console.log("cannot delete '\n'",err);
+    res.send({message: "cannot delete Product"})
+  })
+});
 
 module.exports= {router};
