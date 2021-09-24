@@ -71,6 +71,8 @@ router.post('/editProduct',(req,res)=>{
     res.send({message: "cannot Edit"})
   })
 
-})
+});
+
+
 
 module.exports= {router};

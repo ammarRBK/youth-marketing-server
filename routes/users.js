@@ -35,11 +35,6 @@ router.post('/signup',(req,res)=>{
             console.log("-------->done")
             
         })
-        // var user = new db(newUser);
-        // user.save()
-        // .then(item => {
-        //     res.send("user saved in database");
-        // })
     })
     .then(()=>{
         res.send({successMessage:"User saved with hashed password"});
