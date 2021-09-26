@@ -46,11 +46,11 @@ router.post('/signup',(req,res)=>{
 
 
 router.post('/signin',(req,res)=>{
-    let userName= req.body.userName;
+    let phoneNumber= req.body.phoneNumber;
     let password= req.body.password;
 
     db.findOne({
-        where:{userName: userName}
+        where:{phoneNumber: phoneNumber}
     }).then(user=>{
         console.log("-------->user: ",user)
         if(!user){
@@ -68,7 +68,7 @@ router.post('/signin',(req,res)=>{
                 }
             })
             .catch(err =>{
-                console.log("error in Comparing Password ", err);
+                console.log({message:"error in Comparing Password ", error: err});
             })
         }
     })
