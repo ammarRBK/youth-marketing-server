@@ -3,6 +3,8 @@ var app= express();
 var router= express.Router();
 var bcrypt= require('bcrypt');
 var db= require('../database/usersModel').Users;
+var cors= require('cors');
+var corsOptions= require('../server').corsOptions;
 
 var userSession= {};
 var session= require('express-session');
@@ -13,9 +15,16 @@ app.use(session({
   cookie: { secure: true }
 }));
 
+var corsOptions={
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+}
 
 
-router.post('/signup',(req,res)=>{
+router.options('/signup',cors(corsOptions));
+router.post('/signup',cors(corsOptions),(req,res)=>{
     let userName= req.body.userName;
     let password= req.body.password;
     let phoneNumber= req.body.phoneNumber || null;
@@ -44,8 +53,8 @@ router.post('/signup',(req,res)=>{
     })
 });
 
-
-router.post('/signin',(req,res)=>{
+router.options('/signin',cors(corsOptions));
+router.post('/signin',cors(corsOptions),(req,res)=>{
     let phoneNumber= req.body.phoneNumber;
     let password= req.body.password;
 
@@ -74,7 +83,8 @@ router.post('/signin',(req,res)=>{
     })
 });
 
-router.get('/logout',(req,res)=>{
+app.head("/simple-cors", cors());
+router.get('/logout',cors(),(req,res)=>{
     userSession= {};
     res.send({message: "logged out"});
 });
