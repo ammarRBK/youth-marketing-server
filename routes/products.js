@@ -36,7 +36,7 @@ router.post('/addProduct',cors(corsOptions),(req,res)=>{
 
 
 router.options('/deleteProduct',cors(corsOptions))
-router.post('/deleteProduct',cors(corsOptions),(req,res)=>{
+router.delete('/deleteProduct',cors(corsOptions),(req,res)=>{
   let proId= req.body.productId;
 
   db.destroy({
