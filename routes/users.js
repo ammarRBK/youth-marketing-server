@@ -89,4 +89,4 @@ router.get('/logout',cors(),(req,res)=>{
     res.send({message: "logged out"});
 });
 
-module.exports= {router,userSession};
+module.exports= {router,userSession,cors,corsOptions};

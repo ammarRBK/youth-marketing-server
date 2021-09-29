@@ -2,6 +2,8 @@ var express= require('express');
 var app= express();
 var router= express.Router();
 var db= require('../database/productionsModel').Productions;
+var cors= require('./users').cors;
+var corsOptions= require('./users').corsOptions;
 
 var cliSession= require('./users').userSession;
 var session= require('express-session');
@@ -12,7 +14,8 @@ app.use(session({
   cookie: { secure: true }
 }));
 
-router.post('/addProduct',(req,res)=>{
+router.options('/addProduct',cors(corsOptions))
+router.post('/addProduct',cors(corsOptions),(req,res)=>{
   let Production= {
     productTitle: req.body.productTitle,
     productDisciption: req.body.productDisciption,
@@ -31,7 +34,9 @@ router.post('/addProduct',(req,res)=>{
   console.log(Production);
 });
 
-router.post('/deleteProduct',(req,res)=>{
+
+router.options('/deleteProduct',cors(corsOptions))
+router.post('/deleteProduct',cors(corsOptions),(req,res)=>{
   let proId= req.body.productId;
 
   db.destroy({
@@ -47,7 +52,8 @@ router.post('/deleteProduct',(req,res)=>{
   })
 });
 
-router.post('/editProduct',(req,res)=>{
+router.options('/editProduct',cors(corsOptions))
+router.post('/editProduct',cors(corsOptions),(req,res)=>{
   let proId= req.body.productId;
   let editedProduct= {
     productTitle: req.body.productTitle,
