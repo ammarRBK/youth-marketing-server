@@ -83,12 +83,12 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
     })
 });
 
-router.head('/checkloggedin',cors(corsOptions));
+router.options('/checkloggedin',cors(corsOptions));
 router.get('/checkloggedin',cors(corsOptions),(req,res)=>{
     userSession.userId ? res.send({message: "loggedin"}) : res.send({message: "not loggedin"});
 })
 
-router.head("/logout", cors(corsOptions));
+router.options("/logout", cors(corsOptions));
 router.get('/logout',cors(corsOptions),(req,res)=>{
     userSession= {};
     res.send({message: "logged out"});
