@@ -35,8 +35,8 @@ router.post('/addProduct',cors(corsOptions),(req,res)=>{
 });
 
 
-router.options('/deleteProduct',cors(corsOptions))
-router.delete('/deleteProduct',cors(corsOptions),(req,res)=>{
+router.options('/deleteproduct',cors(corsOptions))
+router.delete('/deleteproduct',cors(corsOptions),(req,res)=>{
   let proId= req.body.productId;
 
   db.destroy({
@@ -44,7 +44,7 @@ router.delete('/deleteProduct',cors(corsOptions),(req,res)=>{
       id: proId
     }
   }).then(success=>{
-    console.log('------->deleted"\n"',success);
+    console.log('------->deleted \n',success);
     res.send({message: "Product deleted"});
   }).catch(err=>{
     console.log("cannot delete '\n'",err);
@@ -78,6 +78,15 @@ router.post('/editProduct',cors(corsOptions),(req,res)=>{
   })
 
 });
+
+router.options('/getproducts',cors(corsOptions))
+router.get('/getproducts',cors(corsOptions),(req,res)=>{
+  db.findAll().then(pro=>{
+    console.log(JSON.stringify(pro));
+    res.send(JSON.stringify(pro));
+  })
+  
+})
 
 
 
