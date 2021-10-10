@@ -82,7 +82,6 @@ router.post('/editProduct',cors(corsOptions),(req,res)=>{
 router.options('/getproducts',cors(corsOptions))
 router.get('/getproducts',cors(corsOptions),(req,res)=>{
   db.findAll().then(pro=>{
-    console.log(JSON.stringify(pro));
     res.send(JSON.stringify(pro));
   })
   
