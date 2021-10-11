@@ -84,7 +84,6 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
   db.findAll().then(pro=>{
     res.send(JSON.stringify(pro));
   })
-  
 })
 
 
