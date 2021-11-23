@@ -86,6 +86,17 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
   })
 })
 
+router.options('/getUserProducts',cors(corsOptions))
+router.get('/getUserProducts',cors(corsOptions),(req,res)=>{
+  db.findAll({
+    where:{
+      userId: cliSession.userId
+    }
+  }).then(pros=>{
+    !pros ? res.send({message:"you dont have products yet"}) : res.send({message:"your products", prods:JSON.stringify(pros)});
+  })
+})
+
 
 
 module.exports= {router};
