@@ -2,6 +2,7 @@ var express= require('express');
 var app= express();
 var router= express.Router();
 var db= require('../database/productionsModel').Productions;
+var uploadFile= require('./../multer/multer_helper');
 var cors= require('./users').cors;
 var corsOptions= require('./users').corsOptions;
 
@@ -15,7 +16,7 @@ app.use(session({
 }));
 
 router.options('/addProduct',cors(corsOptions))
-router.post('/addProduct',cors(corsOptions),(req,res)=>{
+router.post('/addProduct',uploadFile.single('file'),cors(corsOptions),(req,res)=>{
   let Production= {
     productTitle: req.body.productTitle,
     productDisciption: req.body.productDisciption,
@@ -23,6 +24,7 @@ router.post('/addProduct',cors(corsOptions),(req,res)=>{
     availableUnits: req.body.availableUnits || 0,
     productDate: new Date(req.body.productDate) || null,
     expirationDate: new Date(req.body.expirationDate) || null,
+    image: req.file,
     userId: cliSession.userId
   };
 
@@ -62,6 +64,7 @@ router.post('/editProduct',cors(corsOptions),(req,res)=>{
     availableUnits: req.body.availableUnits || 0,
     productDate: new Date(req.body.productDate) || null,
     expirationDate: new Date(req.body.expirationDate) || null,
+    image: req.body.image,
     userId: cliSession.userId
   }
 

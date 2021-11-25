@@ -24,6 +24,9 @@ const Productions= sequelize.define('productions',{
     },
     expirationDate:{
         type: DataTypes.DATEONLY
+    },
+    image:{
+        type: DataTypes.BLOB('long')
     }
 },{
     freezeTableName: true
