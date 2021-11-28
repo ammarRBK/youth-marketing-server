@@ -15,8 +15,8 @@ app.use(session({
   cookie: { secure: true }
 }));
 
-router.options('/addProduct',cors(corsOptions))
-router.post('/addProduct',uploadFile.single('file'),cors(corsOptions),(req,res)=>{
+router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions))
+router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(req,res)=>{
   let Production= {
     productTitle: req.body.productTitle,
     productDisciption: req.body.productDisciption,
