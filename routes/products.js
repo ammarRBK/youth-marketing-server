@@ -19,7 +19,7 @@ router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions)
 router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(req,res)=>{
   let Production= {
     productTitle: req.body.productTitle,
-    productDisciption: req.body.productDisciption,
+    productDisciption: req.body.productDescription,
     productQuantity: parseFloat(req.body.productQuantity),
     availableUnits: req.body.availableUnits || 0,
     productDate: new Date(req.body.productDate) || null,
