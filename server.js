@@ -5,7 +5,12 @@ var fs= require('fs');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors= require('cors')
-app.use(cors())
+app.use(cors({
+  "Access-Control-Allow-Origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}))
 
 var products = require('./routes/products').router;
 var users= require('./routes/users').router;
