@@ -9,7 +9,7 @@ app.use(cors({
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
   "preflightContinue": false,
   "optionsSuccessStatus": 200,
-  "origin": "*",
+  "Access-Control-Allow-Origin": "*",
   "allowedHeaders": true
 }))
 
