@@ -9,8 +9,7 @@ app.use(cors({
   "Access-Control-Allow-Origin": "*",
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
   "preflightContinue": false,
-  "optionsSuccessStatus": 204,
-  "allowedHeaders": true
+  "optionsSuccessStatus": 204
 }))
 
 var products = require('./routes/products').router;
