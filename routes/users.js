@@ -53,8 +53,8 @@ router.post('/signup',cors(corsOptions),(req,res)=>{
     })
 });
 
-router.options('/signin',cors(corsOptions));
-router.post('/signin',cors(corsOptions),(req,res)=>{
+// router.options('/signin',cors(corsOptions));
+router.post('/signin',(req,res)=>{
     let phoneNumber= req.body.phoneNumber;
     let password= req.body.password;
 

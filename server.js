@@ -4,6 +4,8 @@ var path = require('path');
 var fs= require('fs');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var cors= require('cors')
+app.use(cors())
 
 var products = require('./routes/products').router;
 var users= require('./routes/users').router;
