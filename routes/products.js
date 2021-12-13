@@ -4,7 +4,12 @@ var router= express.Router();
 var db= require('../database/productionsModel').Productions;
 var uploadFile= require('./../multer/multer_helper');
 var cors= require('./users').cors;
-var corsOptions= require('./users').corsOptions;
+var corsOptions= {
+  "Access-Control-Allow-Origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "optionsSuccessStatus": 200,
+  "Content-Type": "multipart/form-data"
+};
 
 var cliSession= require('./users').userSession;
 var session= require('express-session');
@@ -31,7 +36,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
   db.create(Production).then(()=>{
     res.send({message:"production added successfully"});
   }).catch(err=>{
-    res.send({message:"cannot add the product '\n' "+err});
+    res.send({message:"cannot add the product"});
   })
   console.log(Production);
 });

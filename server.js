@@ -36,18 +36,12 @@ app.use('/api/products',products);
 
 
 
-app.listen(process.env.PORT ||'3000',()=>{
+app.listen(process.env.PORT ||3000,()=>{
   console.log("app is ready")
 })
 
 app.get('/api',(req,res)=>{
   res.send({message:"hello Ammar"})
-})
-
-app.post('/api/file',(req,res)=>{
-  var file= req.body.file;
-  console.log(file)
-  res.send(file)
 })
 
 module.exports = app;

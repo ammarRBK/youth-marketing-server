@@ -18,8 +18,7 @@ app.use(session({
 var corsOptions={
     "Access-Control-Allow-Origin": "*",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
+    "optionsSuccessStatus": 200
 }
 
 
