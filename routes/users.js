@@ -93,4 +93,10 @@ router.get('/logout',cors(corsOptions),(req,res)=>{
     res.send({message: "logged out"});
 });
 
+router.options("/getsession", cors(corsOptions));
+router.get('/getsession',cors(corsOptions),(req,res)=>{
+    userSession.userId > 0 ? res.send({message: "authintecated", user: userSession}) 
+    : res.send({message: "not authintecated"}) 
+})
+
 module.exports= {router,userSession,cors,corsOptions};
