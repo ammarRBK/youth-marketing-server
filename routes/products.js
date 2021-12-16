@@ -45,7 +45,6 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
 router.options('/deleteproduct',cors(corsOptions))
 router.post('/deleteproduct',cors(corsOptions),(req,res)=>{
   let proId= req.body.productId;
-  console.log('----------------->boooooodyyyy',req.body)
   db.destroy({
     where:{
       id: proId
@@ -101,6 +100,7 @@ router.get('/getUserProducts',cors(corsOptions),(req,res)=>{
       userId: cliSession.userId
     }
   }).then(pros=>{
+    console.log('----------------->products',pros)
     !pros ? res.send({message:"you dont have products yet"}) : res.send({userName: cliSession.userName, prods:JSON.stringify(pros)});
   })
 })
