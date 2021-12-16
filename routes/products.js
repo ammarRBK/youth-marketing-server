@@ -43,7 +43,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
 
 
 router.options('/deleteproduct',cors(corsOptions))
-router.delete('/deleteproduct',cors(corsOptions),(req,res)=>{
+router.post('/deleteproduct',cors(corsOptions),(req,res)=>{
   let proId= req.body.productId;
   console.log('----------------->boooooodyyyy',req.body)
   db.destroy({
