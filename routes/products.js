@@ -100,8 +100,8 @@ router.get('/getUserProducts',cors(corsOptions),(req,res)=>{
       userId: cliSession.userId
     }
   }).then(pros=>{
-    console.log('----------------->products',pros)
-    !pros ? res.send({message:"you dont have products yet"}) : res.send({userName: cliSession.userName, prods:JSON.stringify(pros)});
+    
+    pros.length === 0 ? res.send({message:"you dont have products yet"}) : res.send({userName: cliSession.userName, prods:JSON.stringify(pros)});
   })
 })
 
