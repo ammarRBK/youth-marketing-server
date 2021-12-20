@@ -27,6 +27,10 @@ const Productions= sequelize.define('productions',{
     },
     image:{
         type: DataTypes.BLOB('long')
+    },
+    productPrice:{
+        type: DataTypes.FLOAT,
+        allowNull: false
     }
 },{
     freezeTableName: true

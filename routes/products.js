@@ -30,6 +30,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
     productDate: new Date(req.body.productDate) || null,
     expirationDate: new Date(req.body.expirationDate) || null,
     image: req.file,
+    productPrice: parseFloat(req.body.productPrice),
     userId: cliSession.userId
   };
 
@@ -69,6 +70,7 @@ router.post('/editProduct',cors(corsOptions),(req,res)=>{
     productDate: new Date(req.body.productDate) || null,
     expirationDate: new Date(req.body.expirationDate) || null,
     image: req.body.image,
+    productPrice: req.body.productPrice,
     userId: cliSession.userId
   }
 
