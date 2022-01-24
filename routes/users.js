@@ -67,13 +67,13 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
         }else{
             bcrypt.compare(password,user.password).then(result=>{
                 if (result) {
-                    userSession[user.userId]= {
+                    userSession[req.body.deviceId]= {
                     userName: user.userName,
                     address: user.address, 
-                    deviceId: deviceId
+                    userId: user.userId
                     }
                     session[user.userId]= userSession[user.userId];
-                    res.send({message: "user Authintecated",user: userSession[user.userId]});
+                    res.send({message: "user Authintecated",user: userSession[req.body.deviceId]});
                 } else {
                     res.send({message: "wrong password"});
                 }
@@ -88,7 +88,7 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
 router.options('/checkloggedin',cors(corsOptions));
 router.post('/checkloggedin',cors(corsOptions),(req,res)=>{
     for(let key in userSession){
-        if(userSession[key].deviceId === req.body.deviceId){
+        if(key === req.body.deviceId){
             res.send({message: "loggedin"});
         }
     }
@@ -99,7 +99,7 @@ router.post('/checkloggedin',cors(corsOptions),(req,res)=>{
 router.options("/logout", cors(corsOptions));
 router.post('/logout',cors(corsOptions),(req,res)=>{
     for(let key in userSession){
-        if(userSession[key].deviceId === req.body.deviceId){
+        if(key === req.body.deviceId){
             delete userSession[key];
             res.send({message: "logged out"});
         }
@@ -109,7 +109,7 @@ router.post('/logout',cors(corsOptions),(req,res)=>{
 router.options("/getsession", cors(corsOptions));
 router.post('/getsession',cors(corsOptions),(req,res)=>{
     for(let key in userSession){
-        if(userSession[key].deviceId === req.body.deviceId){
+        if(key === req.body.deviceId){
             
             res.send({message: "authintecated", user: userSession[key]});
         }
