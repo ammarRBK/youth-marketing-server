@@ -56,21 +56,24 @@ router.options('/signin',cors(corsOptions));
 router.post('/signin',cors(corsOptions),(req,res)=>{
     let phoneNumber= req.body.phoneNumber;
     let password= req.body.password;
+    let deviceId= req.body.deviceId;
 
     db.findOne({
         where:{phoneNumber: phoneNumber}
     }).then(user=>{
-        console.log("-------->user: ",user)
+        
         if(!user){
             res.send({message: "user is not in database"})
         }else{
             bcrypt.compare(password,user.password).then(result=>{
                 if (result) {
-                    userSession.userId= user.userId;
-                    userSession.userName= user.userName;
-                    userSession.address= user.address; 
-                    session.user= userSession;
-                    res.send({message: "user Authintecated",user: userSession});
+                    userSession[user.userId]= {
+                    userName: user.userName,
+                    address: user.address, 
+                    deviceId: deviceId
+                    }
+                    session[user.userId]= userSession[user.userId];
+                    res.send({message: "user Authintecated",user: userSession[user.userId]});
                 } else {
                     res.send({message: "wrong password"});
                 }
@@ -83,20 +86,35 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
 });
 
 router.options('/checkloggedin',cors(corsOptions));
-router.get('/checkloggedin',cors(corsOptions),(req,res)=>{
-    userSession.userId ? res.send({message: "loggedin"}) : res.send({message: "not loggedin"});
+router.post('/checkloggedin',cors(corsOptions),(req,res)=>{
+    for(let key in userSession){
+        if(userSession[key].deviceId === req.body.deviceId){
+            res.send({message: "loggedin"});
+        }
+    }
+
+    res.send({message: "not loggedin"});
 })
 
 router.options("/logout", cors(corsOptions));
-router.get('/logout',cors(corsOptions),(req,res)=>{
-    userSession= {};
-    res.send({message: "logged out"});
+router.post('/logout',cors(corsOptions),(req,res)=>{
+    for(let key in userSession){
+        if(userSession[key].deviceId === req.body.deviceId){
+            delete userSession[key];
+            res.send({message: "logged out"});
+        }
+    }
 });
 
 router.options("/getsession", cors(corsOptions));
-router.get('/getsession',cors(corsOptions),(req,res)=>{
-    userSession.userId > 0 ? res.send({message: "authintecated", user: userSession}) 
-    : res.send({message: "not authintecated"}) 
+router.post('/getsession',cors(corsOptions),(req,res)=>{
+    for(let key in userSession){
+        if(userSession[key].deviceId === req.body.deviceId){
+            
+            res.send({message: "authintecated", user: userSession[key]});
+        }
+    }
+    res.send({message: "not authintecated"});
 })
 
 module.exports= {router,userSession,cors,corsOptions};
