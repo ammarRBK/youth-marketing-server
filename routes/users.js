@@ -87,9 +87,11 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
 
 router.options('/checkloggedin',cors(corsOptions));
 router.post('/checkloggedin',cors(corsOptions),(req,res)=>{
-    for(let key in userSession){
-        if(key === req.body.deviceId){
-            res.send({message: "loggedin"});
+    if(Object.keys(userSession).length > 0){
+        for(let key in userSession){
+            if(key === req.body.deviceId){
+                res.send({message: "loggedin"});
+            }
         }
     }
 
