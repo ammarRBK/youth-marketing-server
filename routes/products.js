@@ -96,15 +96,23 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
 })
 
 router.options('/getUserProducts',cors(corsOptions))
-router.get('/getUserProducts',cors(corsOptions),(req,res)=>{
-  db.findAll({
-    where:{
-      userId: cliSession.userId
+router.post('/getUserProducts',cors(corsOptions),(req,res)=>{
+  let deviceId= req.body.deviceId
+  if(Object.keys(cliSession).length > 0){
+    for(let key in cliSession){
+      if(key === deviceId){
+        db.findAll({
+          where:{
+            userId: cliSession[key].userId
+          }
+        }).then(pros=>{
+          
+          pros.length === 0 ? res.send({userName: cliSession.userName,message:"you dont have products yet"}) : res.send({userName: cliSession.userName, prods:JSON.stringify(pros)});
+        })
+      }
     }
-  }).then(pros=>{
-    
-    pros.length === 0 ? res.send({userName: cliSession.userName,message:"you dont have products yet"}) : res.send({userName: cliSession.userName, prods:JSON.stringify(pros)});
-  })
+  }
+  res.send({userName: cliSession.userName,message:"you dont have products yet"})
 })
 
 
