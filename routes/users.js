@@ -89,12 +89,12 @@ router.options('/checkloggedin',cors(corsOptions));
 router.post('/checkloggedin',cors(corsOptions),(req,res)=>{
     if(Object.keys(userSession).length > 0){
         for(let key in userSession){
+            console.log(req.body.deviceId)
             if(key === req.body.deviceId){
                 res.send({message: "loggedin"});
             }
         }
     }
-
     res.send({message: "not loggedin"});
 })
 
