@@ -31,7 +31,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
     expirationDate: new Date(req.body.expirationDate) || null,
     image: req.file,
     productPrice: parseFloat(req.body.productPrice),
-    userId: cliSession.userId
+    userId: cliSession[req.body.deviceId].userId
   };
 
   db.create(Production).then(()=>{

@@ -67,13 +67,13 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
         }else{
             bcrypt.compare(password,user.password).then(result=>{
                 if (result) {
-                    userSession[req.body.deviceId]= {
+                    userSession[deviceId]= {
                     userName: user.userName,
                     address: user.address, 
                     userId: user.userId
                     }
                     session[user.userId]= userSession[user.userId];
-                    res.send({message: "user Authintecated",user: userSession[req.body.deviceId]});
+                    res.send({message: "user Authintecated",user: userSession[deviceId]});
                 } else {
                     res.send({message: "wrong password"});
                 }
@@ -87,15 +87,19 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
 
 router.options('/checkloggedin',cors(corsOptions));
 router.post('/checkloggedin',cors(corsOptions),(req,res)=>{
-    if(Object.keys(userSession).length > 0){
-        for(let key in userSession){
-            console.log("ديفايس ايديييييييي---------- \n",req.body.deviceId)
-            if(key === req.body.deviceId){
+    let deviceId= req.body.deviceId;
+    let keys= Object.keys(userSession).length;
+    if(keys > 0){
+        for(const device in userSession){
+            console.log("ديفايس ايديييييييي---------- \n", deviceId)
+            if(device === deviceId){
                 res.send({message: "loggedin"});
             }
         }
+    }else{
+        res.send({message: "not loggedin"});
     }
-    res.send({message: "not loggedin"});
+    
 })
 
 router.options("/logout", cors(corsOptions));
@@ -110,13 +114,17 @@ router.post('/logout',cors(corsOptions),(req,res)=>{
 
 router.options("/getsession", cors(corsOptions));
 router.post('/getsession',cors(corsOptions),(req,res)=>{
-    for(let key in userSession){
-        if(key === req.body.deviceId){
-            
-            res.send({message: "authintecated", user: userSession[key]});
+    let keys= Object.keys(userSession).length;
+    if(keys > 0){
+        for(let key in userSession){
+            if(key === req.body.deviceId){
+                
+                res.send({message: "authintecated", user: userSession[key]});
+            }
         }
+    }else{
+        res.send({message: "not authintecated"});
     }
-    res.send({message: "not authintecated"});
 })
 
 module.exports= {router,userSession,cors,corsOptions};
