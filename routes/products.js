@@ -38,7 +38,8 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
     console.log(req.file.originalname);
     res.send({message:"production added successfully"});
   }).catch(err=>{
-    res.send({Error:err+"\n",message:"cannot add the product"});
+    console.log("Error adding the product \n",err+"\n")
+    res.send({Error:err,message:"cannot add the product"});
   })
 });
 
