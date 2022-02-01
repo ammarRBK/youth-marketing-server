@@ -35,7 +35,6 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
   };
 
   db.create(Production).then(()=>{
-    console.log(req.file.originalname);
     res.send({message:"production added successfully"});
   }).catch(err=>{
     console.log("Error adding the product \n",err+"\n")
