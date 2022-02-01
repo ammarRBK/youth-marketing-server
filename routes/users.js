@@ -94,8 +94,10 @@ router.post('/checkloggedin',cors(corsOptions),(req,res)=>{
             console.log("ديفايس ايديييييييي---------- \n", deviceId)
             if(device === deviceId){
                 res.send({message: "loggedin"});
+                return;
             }
         }
+        res.send({message: "not loggedin"});
     }else{
         res.send({message: "not loggedin"});
     }
@@ -120,6 +122,7 @@ router.post('/getsession',cors(corsOptions),(req,res)=>{
             if(key === req.body.deviceId){
                 
                 res.send({message: "authintecated", user: userSession[key]});
+                return;
             }
         }
     }else{

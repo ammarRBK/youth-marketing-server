@@ -35,11 +35,11 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
   };
 
   db.create(Production).then(()=>{
+    console.log(req.file.originalname);
     res.send({message:"production added successfully"});
   }).catch(err=>{
-    res.send({message:"cannot add the product"});
+    res.send({Error:err+"\n",message:"cannot add the product"});
   })
-  console.log(Production);
 });
 
 
@@ -107,12 +107,14 @@ router.post('/getUserProducts',cors(corsOptions),(req,res)=>{
           }
         }).then(pros=>{
           
-          pros.length === 0 ? res.send({userName: cliSession.userName,message:"you dont have products yet"}) : res.send({userName: cliSession.userName, prods:JSON.stringify(pros)});
+          pros.length === 0 ? res.send({userName: cliSession[key].userName,message:"you dont have products yet"}) : res.send({userName: cliSession[key].userName, prods:JSON.stringify(pros)});
         })
       }
     }
+  }else{
+    res.send({message:"you dont have products yet"})
   }
-  res.send({userName: cliSession.userName,message:"you dont have products yet"})
+ 
 })
 
 
