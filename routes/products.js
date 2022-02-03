@@ -29,7 +29,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
     availableUnits: req.body.availableUnits || 0,
     productDate: new Date(req.body.productDate) || null,
     expirationDate: new Date(req.body.expirationDate) || null,
-    image: req.file,
+    image: req.body.productImage,
     productPrice: parseFloat(req.body.productPrice),
     userId: cliSession[req.body.deviceId].userId
   };
