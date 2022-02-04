@@ -79,7 +79,7 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
                 }
             })
             .catch(err =>{
-                console.log({message:"error in Comparing Password ", error: err});
+                res.send({message:"error in Comparing Password ", error: err});
             })
         }
     })
