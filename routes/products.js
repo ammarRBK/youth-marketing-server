@@ -22,8 +22,8 @@ app.use(session({
 
 router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions))
 router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(req,res)=>{
-  console.log("params object--------> \n",req.params, "\n body object --------------->",req.body, "\n file Name----------->", req.file.filename)
-  res.send({Error:err,message:"cannot add the product"})
+  console.log("params object--------> \n",req.params, "\n body object --------------->",req.body, "\n file Name----------->", req.file)
+  res.send({message:"cannot add the product"})
   // let Production= {
   //   productTitle: req.body.productTitle,
   //   productDisciption: req.body.productDescription,
