@@ -22,26 +22,26 @@ app.use(session({
 
 router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions))
 router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(req,res)=>{
-  console.log("params object--------> \n",req.params, "\n body object --------------->",req.body, "\n file Name----------->", req.file)
-  res.send({message:"cannot add the product"})
-  // let Production= {
-  //   productTitle: req.body.productTitle,
-  //   productDisciption: req.body.productDescription,
-  //   productQuantity: parseFloat(req.body.productQuantity),
-  //   availableUnits: req.body.availableUnits || 0,
-  //   productDate: new Date(req.body.productDate) || null,
-  //   expirationDate: new Date(req.body.expirationDate) || null,
-  //   image: req.body.productImage,
-  //   productPrice: parseFloat(req.body.productPrice),
-  //   userId: cliSession[req.body.deviceId].userId
-  // };
+  // console.log("params object--------> \n",req.params, "\n body object --------------->",req.body, "\n file Name----------->", req.file)
+  // res.send({message:"cannot add the product"})
+  let Production= {
+    productTitle: req.body.productTitle,
+    productDisciption: req.body.productDescription,
+    productQuantity: parseFloat(req.body.productQuantity),
+    availableUnits: req.body.availableUnits || 0,
+    productDate: new Date(req.body.productDate) || null,
+    expirationDate: new Date(req.body.expirationDate) || null,
+    image: req.file,
+    productPrice: parseFloat(req.body.productPrice),
+    userId: cliSession[req.body.deviceId].userId
+  };
 
-  // db.create(Production).then(()=>{
-  //   res.send({message:"production added successfully"});
-  // }).catch(err=>{
-  //   console.log("Error adding the product \n",err+"\n")
-  //   res.send({Error:err,message:"cannot add the product"});
-  // })
+  db.create(Production).then(()=>{
+    res.send({message:"production added successfully"});
+  }).catch(err=>{
+    console.log("Error adding the product \n",err+"\n")
+    res.send({Error:err,message:"cannot add the product"});
+  })
 });
 
 
