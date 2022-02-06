@@ -113,7 +113,7 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
       product['image']= `data:image/png;base64,${BetoA}`;
 
       prods.push(product);
-    }) : res.send(JSON.stringify(prods));
+    }) : res.send(JSON.stringify(prods.push("HEllo world")));
     
   });
   res.send(JSON.stringify(prods));
