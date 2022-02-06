@@ -94,8 +94,7 @@ router.options('/getproducts',cors(corsOptions))
 router.get('/getproducts',cors(corsOptions),(req,res)=>{
   var prods=[];
   db.findAll().then(pro=>{
-    
-    pro.length > 0 ? pro.forEach((elem,index)=>{
+    pro.forEach((elem,index)=>{
       var product={
         id: elem[index].id,
         productTitle: elem[index].productTitle,
@@ -113,7 +112,7 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
       product['image']= `data:image/png;base64,${BetoA}`;
 
       prods.push(product);
-    }) : res.send(JSON.stringify(prods.push("HEllo world")));
+    })
     
   });
   res.send(JSON.stringify(prods));
