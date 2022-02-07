@@ -106,8 +106,8 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
         productPrice: product.productPrice,
         userId: product.userId
       };
-
-      if(product.image.data.length > 0){
+      let imagedata= product.image;
+      if(imagedata.data.length > 0){
         let BetoA= btoa(product.image.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
         productObj.image= `data:image/png;base64,${BetoA}`;
