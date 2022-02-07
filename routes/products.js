@@ -93,29 +93,29 @@ router.post('/editProduct',cors(corsOptions),(req,res)=>{
 router.options('/getproducts',cors(corsOptions))
 router.get('/getproducts',cors(corsOptions),(req,res)=>{
   var prods=[];
-  db.findAll().then(pro=>{
-    pro.forEach((elem,index)=>{
-      var product={
-        id: elem[index].id,
-        productTitle: elem[index].productTitle,
-        productDisciption: elem[index].productDisciption,
-        productQuantity: elem[index].productQuantity,
-        availableUnits: elem[index].availableUnits,
-        productDate: elem[index].productDate,
-        expirationDate: elem[index].expirationDate,
-        productPrice: elem[index].productPrice,
-        userId: elem[index].userId
+  db.findAll().then(productsArr=>{
+    productsArr.forEach((product,index)=>{
+      var productObj={
+        id: product.id,
+        productTitle: product.productTitle,
+        productDisciption: product.productDisciption,
+        productQuantity: product.productQuantity,
+        availableUnits: product.availableUnits,
+        productDate: product.productDate,
+        expirationDate: product.expirationDate,
+        productPrice: product.productPrice,
+        userId: product.userId
       };
 
-      let BetoA= btoa(elem[index].image.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+      let BetoA= btoa(product.image.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
       product['image']= `data:image/png;base64,${BetoA}`;
 
-      prods.push(product);
+      prods.push(productObj);
     })
     
   });
-  res.send(JSON.stringify(prods));
+  res.send(prods);
 })
 
 router.options('/getUserProducts',cors(corsOptions))
