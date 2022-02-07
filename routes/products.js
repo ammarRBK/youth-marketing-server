@@ -94,8 +94,8 @@ router.options('/getproducts',cors(corsOptions))
 router.get('/getproducts',cors(corsOptions),(req,res)=>{
   var prods=[];
   db.findAll().then(productsArr=>{
-    productsArr.forEach((product,index)=>{
-      var productObj={
+    productsArr.forEach((product)=>{
+      let productObj={
         id: product.id,
         productTitle: product.productTitle,
         productDisciption: product.productDisciption,
@@ -109,13 +109,13 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
 
       let BetoA= btoa(product.image.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
-      product['image']= `data:image/png;base64,${BetoA}`;
+      product.image= `data:image/png;base64,${BetoA}`;
 
       prods.push(productObj);
     })
-    
+    res.send(prods);
   });
-  res.send(prods);
+  
 })
 
 router.options('/getUserProducts',cors(corsOptions))
