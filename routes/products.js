@@ -107,15 +107,17 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
         userId: product.userId
       };
 
-      if(product.image['data']){
-        let BetoA= btoa(product.image.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+      // if(product.image['data']){
+      //   let BetoA= btoa(product.image.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
-        productObj.image= `data:image/png;base64,${BetoA}`;
+      //   productObj.image= `data:image/png;base64,${BetoA}`;
 
-        prods.push(productObj);
-      }else{
-        prods.push(productObj);
-      }
+      //   prods.push(productObj);
+      // }else{
+      //   prods.push(productObj);
+      // }
+      productObj.image= product.image
+      prods.push(productObj);
     })
     res.send(prods);
   });
