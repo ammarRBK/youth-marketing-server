@@ -107,11 +107,15 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
         userId: product.userId
       };
 
-      let BetoA= btoa(product.image.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+      if(product.image){
+        let BetoA= btoa(product.image.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
-      product.image= `data:image/png;base64,${BetoA}`;
+        productObj.image= `data:image/png;base64,${BetoA}`;
 
-      prods.push(productObj);
+        prods.push(productObj);
+      }else{
+        prods.push(productObj);
+      }
     })
     res.send(prods);
   });
