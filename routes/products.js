@@ -106,16 +106,16 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
         productPrice: product.productPrice,
         userId: product.userId
       };
-      let imagedata= product.image;
-      if(typeof(imagedata['data']) !== 'undefined'){
-        let BetoA= btoa(imagedata.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+      productObj.image= product.image;
+      // if(typeof(imagedata['data']) !== 'undefined'){
+      //   let BetoA= btoa(imagedata.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
-        productObj.image= `data:image/png;base64,${BetoA}`;
+      //   productObj.image= `data:image/png;base64,${BetoA}`;
 
+      //   prods.push(productObj);
+      // }else{
         prods.push(productObj);
-      }else{
-        prods.push(productObj);
-      }
+      // }
     })
     res.send(prods);
   });
