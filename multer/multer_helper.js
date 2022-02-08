@@ -12,7 +12,7 @@ const imageFilter= function(req, file, cb){
 var uploadfiltered= multer()
 const blobtoimage = (blob) => {
   return new Promise(resolve => {
-    const url = URL.createObjectURL(blob)
+    const url = URL.createObjectURL(Buffer.from(blob, 'binary'))
     let img = new Image()
     img.onload = () => {
       URL.revokeObjectURL(url)
