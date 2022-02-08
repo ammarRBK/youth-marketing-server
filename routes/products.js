@@ -108,15 +108,10 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
       };
       // productObj.image= typeof(product.image.data);
       let imagedata= JSON.stringify(product.image)
-      if(typeof(imagedata.data) !== 'undefined'){
         // let BetoA= btoa(imagedata.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
         productObj.image= `data:image/png;base64,${new Buffer(imagedata).toString("base64")}`;
-
         prods.push(productObj);
-      }else{
-        prods.push(productObj);
-      }
     })
     res.send(prods);
   });
