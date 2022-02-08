@@ -10,7 +10,15 @@ const imageFilter= function(req, file, cb){
 };
 // {fileFilter:imageFilter}
 var uploadfiltered= multer()
-var hextobase64=function hexToBase64(str) {
-  return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+const blobtoimage = (blob) => {
+  return new Promise(resolve => {
+    const url = URL.createObjectURL(blob)
+    let img = new Image()
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      resolve(img)
+    }
+    img.src = url
+  })
 }
-module.exports= {uploadfiltered:uploadfiltered,hexBobase64:hextobase64};
+module.exports= {uploadfiltered:uploadfiltered,blobToImage:blobtoimage};

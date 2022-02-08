@@ -3,7 +3,7 @@ var app= express();
 var router= express.Router();
 var db= require('../database/productionsModel').Productions;
 var uploadFile= require('./../multer/multer_helper').uploadfiltered;
-var hexToBase64= require('./../multer/multer_helper').hexBobase64;
+var blobToImage= require('./../multer/multer_helper').blobToImage;
 var cors= require('./users').cors;
 var corsOptions= {
   "Access-Control-Allow-Origin": "*",
@@ -111,7 +111,7 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
       // let imagedata= JSON.stringify(product.image)
         // let BetoA= btoa(imagedata.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
-        productObj.image= JSON.parse(JSON.stringify(product.image));
+        productObj.image= blobToImage(product.image)
         // 'data:image/jpeg;base64,' + hexToBase64(product.image.toString('binary'))
         // `data:image/jpeg;base64,${product.image.toString('base64')}`;
         // `data:image/jpeg;base64,${Buffer.from(JSON.parse(imagedata)).toString("base64")}`;
