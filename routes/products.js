@@ -108,8 +108,7 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
       };
       // productObj.image= typeof(product.image.data);
       let imagedata= JSON.stringify(product.image)
-      let imageCheck= JSON.parse(product.image)
-      if(typeof(imageCheck.data) !== 'undefined'){
+      if(typeof(imagedata.data) !== 'undefined'){
         // let BetoA= btoa(imagedata.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
         productObj.image= `data:image/png;base64,${new Buffer(imagedata).toString("base64")}`;
