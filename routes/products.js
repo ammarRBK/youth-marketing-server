@@ -5,6 +5,8 @@ var router= express.Router();
 var db= require('../database/productionsModel').Productions;
 var uploadFile= require('../helpers/multer_and_google-drive_helpers').uploadFile;
 var drive= require('../helpers/multer_and_google-drive_helpers').driveFunctions;
+var tempName= require('../helpers/multer_and_google-drive_helpers').name.tempName;
+var downloadLink= require('../helpers/multer_and_google-drive_helpers').name.downloadLink;
 var cors= require('./users').cors;
 var corsOptions= {
   "Access-Control-Allow-Origin": "*",
@@ -23,10 +25,12 @@ app.use(session({
 }));
 
 router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions))
-router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(req,res)=>{
-  var filename= req.file.fieldname;
-  var filePath= './temp_images/'+filename;
-  var uploadDriveResult= drive.uploadFile(filename, path.join(__dirname, filePath))
+router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),async (req,res)=>{
+  var filename= tempName;
+  
+  var uploadDriveResult= await drive.uploadFile(filename)
+  const downloadableLink= await drive.getDownloadLink(uploadDriveResult.id)
+  // downloadLink= driveFileDownloadLink['webContentLink']
   let Production= {
     productTitle: req.body.productTitle,
     productDisciption: req.body.productDescription,
@@ -34,11 +38,11 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
     availableUnits: req.body.availableUnits || 0,
     productDate: new Date(req.body.productDate) || null,
     expirationDate: new Date(req.body.expirationDate) || null,
-    image: 'need the downloadable link of the file',
+    image: downloadableLink.webContentLink,
+    imageId: uploadDriveResult.id,
     productPrice: parseFloat(req.body.productPrice),
     userId: cliSession[req.body.deviceId].userId
   };
-
   db.create(Production).then(()=>{
     res.send({message:"production added successfully"});
   }).catch(err=>{
@@ -50,6 +54,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
 
 router.options('/deleteproduct',cors(corsOptions))
 router.post('/deleteproduct',cors(corsOptions),(req,res)=>{
+  let imageId= req.body.imageId;
   let proId= req.body.productId;
   db.destroy({
     where:{
@@ -57,6 +62,7 @@ router.post('/deleteproduct',cors(corsOptions),(req,res)=>{
     }
   }).then(success=>{
     console.log('------->deleted \n',success);
+    //drive.deleteFileFromDrive(imageId);
     res.send({message: "Product deleted"});
   }).catch(err=>{
     console.log("cannot delete '\n'",err);

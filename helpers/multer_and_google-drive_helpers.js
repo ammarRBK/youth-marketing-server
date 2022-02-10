@@ -1,12 +1,32 @@
 var multer= require('multer');
 var fs= require('fs');
+var path= require('path');
+
+var temp_image_name= '';
+var directory= './tempimages'
+var downloadLink= '';
+function deletefiles(){
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+  
+    for (const file of files) {
+      fs.unlink(path.join(directory, file), err => {
+        if (err) throw err;
+      });
+    }
+  });
+}
+
+deletefiles();
+
 
 var storage= multer.diskStorage({
   destination: function (req,file,callback){
-    callback(null, './temp_images');
+    callback(null, '.');
   },
   filename: function (req,file,callback){
-    const filename= Date.now() + '-' + Math.round(Math.random() * 1E9) + '-' + file.fieldname;
+    const filename= Date.now() + '-' + Math.round(Math.random() * 1E9) + '-' + file.originalname;
+    temp_image_name= filename
     callback(null, filename);
   }
 });
@@ -30,25 +50,67 @@ const drive = google.drive({
   auth: oauth2Client,
 });
 
+
 const driveFunctions= {
-  uploadFile: async function(fileName, filePath){
+  uploadFile: async function(fileName){
+    // var filePath= path.join('.','/tempimages','/'+fileName)
     try {
       const response = await drive.files.create({
         requestBody: {
-          name: fileName, //This can be name of your choice
+          name: temp_image_name, //This can be name of your choice
           mimeType: 'image/jpeg',
         },
         media: {
           mimeType: 'image/jpeg',
-          body: fs.createReadStream(filePath),
+          body: fs.createReadStream(temp_image_name, (err, data)=>{
+            if(err) throw err
+          }),
         },
       });
   
-      console.log(response.data);
+      fs.unlink(temp_image_name, err=>{
+        if (err) throw err
+      })
+      // drivefileId= response.data.id
+      // console.log(response.data)
       return response.data;
     } catch (error) {
       console.log(error.message);
       return error.message
+    }
+  },
+  getDownloadLink: async function(uploadedfileId){
+    try{
+      const fileId = uploadedfileId;
+      await drive.permissions.create({
+        fileId: fileId,
+        requestBody: {
+          role: 'reader',
+          type: 'anyone',
+        },
+      });
+  
+      /* 
+      webViewLink: View the file in browser
+      webContentLink: Direct download link 
+      */
+      const result=await drive.files.get({
+        fileId: fileId,
+        fields: 'webViewLink, webContentLink',
+      })
+      return result.data
+    }catch(error){
+      if (error) throw error
+    }
+  },
+  deleteFileFromDrive: async function(fileId) {
+    try {
+      const response = await drive.files.delete({
+        fileId: fileId,
+      });
+      return  response.status;
+    } catch (error) {
+      console.log(error.message);
     }
   }
 }
@@ -74,6 +136,6 @@ const driveFunctions= {
 //     img.src = url
 //   })
 // }
-
+var name= {tempName: temp_image_name, downloadLink: downloadLink};
 var uploadFile= multer({storage:storage})
-module.exports= {uploadFile:uploadFile, driveFunctions: driveFunctions};
+module.exports= {uploadFile:uploadFile, driveFunctions: driveFunctions, name};

@@ -28,6 +28,9 @@ const Productions= sequelize.define('productions',{
     image:{
         type: DataTypes.CHAR(100)
     },
+    imageId:{
+        type: DataTypes.CHAR
+    },
     productPrice:{
         type: DataTypes.FLOAT,
         allowNull: false
