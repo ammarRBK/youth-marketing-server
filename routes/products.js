@@ -1,9 +1,10 @@
 var express= require('express');
 var app= express();
+var path= require('path');
 var router= express.Router();
 var db= require('../database/productionsModel').Productions;
 var uploadFile= require('../helpers/multer_and_google-drive_helpers').uploadFile;
-var blobToImage= require('../helpers/multer_and_google-drive_helpers');
+var drive= require('../helpers/multer_and_google-drive_helpers').driveFunctions;
 var cors= require('./users').cors;
 var corsOptions= {
   "Access-Control-Allow-Origin": "*",
@@ -23,6 +24,9 @@ app.use(session({
 
 router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions))
 router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(req,res)=>{
+  var filename= req.file.fieldname;
+  var filePath= './temp_images/'+filename;
+  var uploadDriveResult= drive.uploadFile(filename, path.join(__dirname, filePath))
   let Production= {
     productTitle: req.body.productTitle,
     productDisciption: req.body.productDescription,
@@ -30,7 +34,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(r
     availableUnits: req.body.availableUnits || 0,
     productDate: new Date(req.body.productDate) || null,
     expirationDate: new Date(req.body.expirationDate) || null,
-    image: req.file,
+    image: 'need the downloadable link of the file',
     productPrice: parseFloat(req.body.productPrice),
     userId: cliSession[req.body.deviceId].userId
   };

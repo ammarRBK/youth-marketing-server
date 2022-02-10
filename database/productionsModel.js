@@ -26,7 +26,7 @@ const Productions= sequelize.define('productions',{
         type: DataTypes.DATEONLY
     },
     image:{
-        type: DataTypes.BLOB('long')
+        type: DataTypes.CHAR(100)
     },
     productPrice:{
         type: DataTypes.FLOAT,
