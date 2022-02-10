@@ -2,8 +2,8 @@ var express= require('express');
 var app= express();
 var router= express.Router();
 var db= require('../database/productionsModel').Productions;
-var uploadFile= require('./../multer/multer_helper').uploadfiltered;
-var blobToImage= require('./../multer/multer_helper').blobToImage;
+var uploadFile= require('../helpers/multer_and_google-drive_helpers').uploadFile;
+var blobToImage= require('../helpers/multer_and_google-drive_helpers');
 var cors= require('./users').cors;
 var corsOptions= {
   "Access-Control-Allow-Origin": "*",
@@ -23,8 +23,6 @@ app.use(session({
 
 router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions))
 router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),(req,res)=>{
-  // console.log("params object--------> \n",req.params, "\n body object --------------->",req.body, "\n file Name----------->", req.file)
-  // res.send({message:"cannot add the product"})
   let Production= {
     productTitle: req.body.productTitle,
     productDisciption: req.body.productDescription,
