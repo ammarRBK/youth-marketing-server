@@ -36,7 +36,7 @@ const Productions= sequelize.define('productions',{
         allowNull: false
     },
     phoneNumber:{
-        type: DataTypes.NUMBER
+        type: DataTypes.INTEGER
     }
 },{
     freezeTableName: true
