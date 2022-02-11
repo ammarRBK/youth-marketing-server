@@ -62,7 +62,7 @@ router.post('/deleteproduct',cors(corsOptions),(req,res)=>{
     }
   }).then(success=>{
     console.log('------->deleted \n',success);
-    //drive.deleteFileFromDrive(imageId);
+    drive.deleteFileFromDrive(imageId);
     res.send({message: "Product deleted"});
   }).catch(err=>{
     console.log("cannot delete '\n'",err);
@@ -112,6 +112,8 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
         availableUnits: product.availableUnits,
         productDate: product.productDate,
         expirationDate: product.expirationDate,
+        image: product.image,
+        imageId: product.imageId,
         productPrice: product.productPrice,
         userId: product.userId
       };
@@ -119,7 +121,7 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
       // let imagedata= JSON.stringify(product.image)
         // let BetoA= btoa(imagedata.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
-        productObj.image= blobToImage(product.image)
+        // productObj.image= blobToImage(product.image)
         // 'data:image/jpeg;base64,' + hexToBase64(product.image.toString('binary'))
         // `data:image/jpeg;base64,${product.image.toString('base64')}`;
         // `data:image/jpeg;base64,${Buffer.from(JSON.parse(imagedata)).toString("base64")}`;
