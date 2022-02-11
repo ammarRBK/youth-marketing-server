@@ -34,6 +34,9 @@ const Productions= sequelize.define('productions',{
     productPrice:{
         type: DataTypes.FLOAT,
         allowNull: false
+    },
+    phoneNumber:{
+        type: DataTypes.NUMBER
     }
 },{
     freezeTableName: true

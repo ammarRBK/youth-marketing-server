@@ -69,7 +69,8 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
                 if (result) {
                     userSession[deviceId]= {
                     userName: user.userName,
-                    address: user.address, 
+                    address: user.address,
+                    phoneNumber: user.phoneNumber, 
                     userId: user.userId
                     }
                     session[user.userId]= userSession[user.userId];

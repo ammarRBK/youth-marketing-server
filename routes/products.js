@@ -41,6 +41,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),as
     image: downloadableLink.webContentLink,
     imageId: uploadDriveResult.id,
     productPrice: parseFloat(req.body.productPrice),
+    phoneNumber: cliSession[req.body.deviceId].phoneNumber,
     userId: cliSession[req.body.deviceId].userId
   };
   db.create(Production).then(()=>{
@@ -115,6 +116,7 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
         image: product.image,
         imageId: product.imageId,
         productPrice: product.productPrice,
+        phoneNumber: product.phoneNumber,
         userId: product.userId
       };
       // productObj.image= typeof(product.image.data);
