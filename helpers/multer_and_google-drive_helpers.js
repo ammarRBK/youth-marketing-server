@@ -3,21 +3,20 @@ var fs= require('fs');
 var path= require('path');
 
 var temp_image_name= '';
-var directory= './tempimages'
 var downloadLink= '';
-function deletefiles(){
-  fs.readdir(directory, (err, files) => {
-    if (err) throw err;
+// function deletefiles(){
+//   fs.readdir(directory, (err, files) => {
+//     if (err) throw err;
   
-    for (const file of files) {
-      fs.unlink(path.join(directory, file), err => {
-        if (err) throw err;
-      });
-    }
-  });
-}
+//     for (const file of files) {
+//       fs.unlink(path.join(directory, file), err => {
+//         if (err) throw err;
+//       });
+//     }
+//   });
+// }
 
-deletefiles();
+// deletefiles();
 
 
 var storage= multer.diskStorage({
