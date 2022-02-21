@@ -71,10 +71,8 @@ const driveFunctions= {
         if (err) throw err
       })
       // drivefileId= response.data.id
-      console.log('--------------> upload FILE SUCCESS:',response.data)
       return response.data;
     } catch (error) {
-      console.log('----------------> upload FILE ERRORR: ',error.message);
       return error.message
     }
   },
