@@ -32,9 +32,9 @@ var storage= multer.diskStorage({
 
 const {google}= require('googleapis');
 const clientId= '93409857556-qm6lqqrl4g2hd1ddoife91dgd3dq1p4f.apps.googleusercontent.com';
-const clientSecretId= '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';
+const clientSecretId= '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';
 const redirectUrl= 'https://developers.google.com/oauthplayground';
-const refreshToken= '1//04NyFL_jlqhyQCgYIARAAGAQSNwF-L9Iru6RtOVLEmn_ilXS1f_sAx2ydt74o8bqddEbUeYVkvdZckJ9aSc_Wcx4taxFVtRRbQIw';
+const refreshToken= '1//04AIjU3ybyiNuCgYIARAAGAQSNwF-L9IrB-AMd7wbo-94pcDAkbB8AZyZX-pH_CMIAIE0SDFA62_BFe5lfnFlVbgbYUsvHoE3MmI';
 
 const oauth2Client = new google.auth.OAuth2(
   clientId,
@@ -71,10 +71,10 @@ const driveFunctions= {
         if (err) throw err
       })
       // drivefileId= response.data.id
-      // console.log(response.data)
+      console.log('--------------> upload FILE SUCCESS:',response.data)
       return response.data;
     } catch (error) {
-      console.log(error.message);
+      console.log('----------------> upload FILE ERRORR: ',error.message);
       return error.message
     }
   },
