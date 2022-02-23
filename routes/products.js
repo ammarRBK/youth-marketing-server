@@ -42,7 +42,9 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),as
     imageId: uploadDriveResult.id,
     productPrice: parseFloat(req.body.productPrice),
     phoneNumber: cliSession[req.body.deviceId].phoneNumber,
-    userId: cliSession[req.body.deviceId].userId
+    userId: cliSession[req.body.deviceId].userId,
+    productOwner: cliSession[req.body.deviceId].userName,
+    productCategory: req.body.productCategory
   };
   db.create(Production).then(()=>{
     res.send({message:"production added successfully"});
@@ -82,8 +84,12 @@ router.post('/editProduct',cors(corsOptions),(req,res)=>{
     productDate: new Date(req.body.productDate) || null,
     expirationDate: new Date(req.body.expirationDate) || null,
     image: req.body.image,
+    imageId: req.body.imageId,
     productPrice: req.body.productPrice,
-    userId: cliSession.userId
+    phoneNumber: req.body.phoneNumber,
+    userId: cliSession.userId,
+    productOwner: cliSession[req.body.deviceId].userName,
+    productCategory: req.body.productCategory
   }
 
   db.update(editedProduct,{
@@ -104,33 +110,39 @@ router.options('/getproducts',cors(corsOptions))
 router.get('/getproducts',cors(corsOptions),(req,res)=>{
   var prods=[];
   db.findAll().then(productsArr=>{
-    productsArr.forEach((product)=>{
-      let productObj={
-        id: product.id,
-        productTitle: product.productTitle,
-        productDisciption: product.productDisciption,
-        productQuantity: product.productQuantity,
-        availableUnits: product.availableUnits,
-        productDate: product.productDate,
-        expirationDate: product.expirationDate,
-        image: product.image,
-        imageId: product.imageId,
-        productPrice: product.productPrice,
-        phoneNumber: product.phoneNumber,
-        userId: product.userId
-      };
-      // productObj.image= typeof(product.image.data);
-      // let imagedata= JSON.stringify(product.image)
-        // let BetoA= btoa(imagedata.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    if(productsArr.length > 0){
+      productsArr.forEach((product)=>{
+        let productObj={
+          id: product.id,
+          productTitle: product.productTitle,
+          productDisciption: product.productDisciption,
+          productQuantity: product.productQuantity,
+          availableUnits: product.availableUnits,
+          productDate: product.productDate,
+          expirationDate: product.expirationDate,
+          image: product.image,
+          imageId: product.imageId,
+          productPrice: product.productPrice,
+          phoneNumber: product.phoneNumber,
+          userId: product.userId,
+          productOwner: product.productOwner,
+          productCategory: product.productCategory
+        };
+        // productObj.image= typeof(product.image.data);
+        // let imagedata= JSON.stringify(product.image)
+          // let BetoA= btoa(imagedata.data.reduce((data, byte) => data + String.fromCharCode(byte), ''));
 
-        // productObj.image= blobToImage(product.image)
-        // 'data:image/jpeg;base64,' + hexToBase64(product.image.toString('binary'))
-        // `data:image/jpeg;base64,${product.image.toString('base64')}`;
-        // `data:image/jpeg;base64,${Buffer.from(JSON.parse(imagedata)).toString("base64")}`;
-        prods.push(productObj);
-    })
-    res.send(prods);
-  });
+          // productObj.image= blobToImage(product.image)
+          // 'data:image/jpeg;base64,' + hexToBase64(product.image.toString('binary'))
+          // `data:image/jpeg;base64,${product.image.toString('base64')}`;
+          // `data:image/jpeg;base64,${Buffer.from(JSON.parse(imagedata)).toString("base64")}`;
+          prods.push(productObj);
+      })
+      res.send(prods);
+    }else{
+      res.send(prods);
+    }
+    });
   
 })
 

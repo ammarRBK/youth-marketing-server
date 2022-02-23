@@ -37,6 +37,14 @@ const Productions= sequelize.define('productions',{
     },
     phoneNumber:{
         type: DataTypes.INTEGER
+    },
+    productOwner:{
+        type: DataTypes.STRING(100),
+        allowNull: false
+    },
+    productCategory: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 },{
     freezeTableName: true
