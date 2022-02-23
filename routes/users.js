@@ -26,8 +26,9 @@ router.options('/signup',cors(corsOptions));
 router.post('/signup',cors(corsOptions),(req,res)=>{
     let userName= req.body.userName;
     let password= req.body.password;
-    let phoneNumber= req.body.phoneNumber || null;
+    let phoneNumber= req.body.phoneNumber;
     let address= req.body.address;
+    let email= req.body.email || null;
 
     bcrypt.hash(password,15)
     .then((hashedPassword)=>{
@@ -35,7 +36,8 @@ router.post('/signup',cors(corsOptions),(req,res)=>{
             userName: userName,
             password: hashedPassword,
             phoneNumber: phoneNumber,
-            address: address
+            address: address,
+            email: email
         }
 
         console.log(newUser);

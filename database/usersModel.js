@@ -19,12 +19,17 @@ const Users= sequelize.define('users',{
     },
     phoneNumber:{
         type: DataTypes.INTEGER,
+        allowNull: false,
         unique: true
     },
     address:{
         type: DataTypes.STRING,
         allowNull: false
 
+    },
+    email:{
+        type: DataTypes.STRING(150),
+        allowNull: true
     }
 },{
     freezeTableName: true
