@@ -20,11 +20,11 @@ const Productions= sequelize.define('productions',{
         type: DataTypes.INTEGER
     },
     productDate:{
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: null
     },
     expirationDate:{
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         defaultValue: null
     },
     image:{
