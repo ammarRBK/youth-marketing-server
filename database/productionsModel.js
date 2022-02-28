@@ -20,12 +20,12 @@ const Productions= sequelize.define('productions',{
         type: DataTypes.INTEGER
     },
     productDate:{
-        type: DataTypes.DATE,
-        defaultValue: null
+        defaultValue: null,
+        type: DataTypes.DATEONLY   
     },
     expirationDate:{
-        type: DataTypes.DATE,
-        defaultValue: null
+        defaultValue: null,
+        type: DataTypes.DATEONLY
     },
     image:{
         type: DataTypes.CHAR(100)
