@@ -35,7 +35,7 @@ const {google}= require('googleapis');
 // const clientSecretId= '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';
 // const redirectUrl= 'https://developers.google.com/oauthplayground';
 // const refreshToken= '1//04AIjU3ybyiNuCgYIARAAGAQSNwF-L9IrB-AMd7wbo-94pcDAkbB8AZyZX-pH_CMIAIE0SDFA62_BFe5lfnFlVbgbYUsvHoE3MmI';
-const authKeyFilePath= 'helpers\\static-factor-340820-0d1718039501.json';
+const authKeyFilePath= 'helpers/static-factor-340820-0d1718039501.json';
 const scopes= ['https://www.googleapis.com/auth/drive'];
 
 const oauth2Client = new google.auth.GoogleAuth({
