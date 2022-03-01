@@ -31,18 +31,19 @@ var storage= multer.diskStorage({
 });
 
 const {google}= require('googleapis');
-const clientId= '93409857556-qm6lqqrl4g2hd1ddoife91dgd3dq1p4f.apps.googleusercontent.com';
-const clientSecretId= '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';
-const redirectUrl= 'https://developers.google.com/oauthplayground';
-const refreshToken= '1//04AIjU3ybyiNuCgYIARAAGAQSNwF-L9IrB-AMd7wbo-94pcDAkbB8AZyZX-pH_CMIAIE0SDFA62_BFe5lfnFlVbgbYUsvHoE3MmI';
+// const clientId= '93409857556-qm6lqqrl4g2hd1ddoife91dgd3dq1p4f.apps.googleusercontent.com';
+// const clientSecretId= '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';
+// const redirectUrl= 'https://developers.google.com/oauthplayground';
+// const refreshToken= '1//04AIjU3ybyiNuCgYIARAAGAQSNwF-L9IrB-AMd7wbo-94pcDAkbB8AZyZX-pH_CMIAIE0SDFA62_BFe5lfnFlVbgbYUsvHoE3MmI';
+const authKeyFilePath= 'helpers\\static-factor-340820-0d1718039501.json';
+const scopes= ['https://www.googleapis.com/auth/drive'];
 
-const oauth2Client = new google.auth.OAuth2(
-  clientId,
-  clientSecretId,
-  redirectUrl
-);
+const oauth2Client = new google.auth.GoogleAuth({
+  keyFilename: authKeyFilePath,
+  scopes: scopes
+})
 
-oauth2Client.setCredentials({ refresh_token: refreshToken });
+// oauth2Client.setCredentials({ refresh_token: refreshToken });
 
 const drive = google.drive({
   version: 'v3',
@@ -64,7 +65,7 @@ const driveFunctions= {
           body: fs.createReadStream(temp_image_name, (err, data)=>{
             if(err) throw err
           }),
-        },
+        }
       });
   
       fs.unlink(temp_image_name, err=>{
@@ -73,6 +74,7 @@ const driveFunctions= {
       // drivefileId= response.data.id
       return response.data;
     } catch (error) {
+      console.log('-------------> ERROR',error.message)
       return error.message
     }
   },

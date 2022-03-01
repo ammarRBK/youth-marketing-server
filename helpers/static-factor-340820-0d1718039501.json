@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "static-factor-340820",
+  "private_key_id": "0d1718039501baa004640d455b4ed7fe0f58eddd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQClhCncGlh1LmRl\nDUbUqxaSrBprJxNVSANQUv2bJPmexRR3jqLRxg69VDmY/N5s94g/rBdLk2Mw7Pm5\ngiZy7LVJwZH8fRp16uSBwEba4q44zoG2mjkSfy8F8DbBBWXtBrW5fRQwshB7SS+p\n18FZXonLGcUnhoLXq0ZGR2VdzM4zZzSqdxPD4WTVS4zlz1TpVl/r9EnRiD+GFAx7\nhHrGxcZi1b2zp0V9lxoYqUavW67FgDwsgPSGnepIC13RRgBjTiXs51GChUAl4Fsh\nlWRAnbPKGfPVmvvT5UPC6XoMRyk51zLAOCRm6diXj135CZl5Ofq7c0wgEwqmMDqz\n4UkLxJTXAgMBAAECggEAFxlYPDBDEGt+iv8XglOJgsOuVi5DC5+msr2PnhNtcM52\npO7M40i9mDJFGDLmGb/74vhHMf6/lOg65mb3AF/vjFENk3akIY5mqy2kgHn/2swF\nx0WZBG9Se9otJ11I/xN00LkCKdTtPuoU/aIviM428xdwGoGHs3CNjf5Qc7mYPLey\nLyaoy/QZzvcfIhICAmGBuwtPdnriJr6sgTKxvJkQgmhYMmQlbBw+Y3s9cH59sUVh\nTKXDjQMjDLK6aXkI3YNYu0Km1agzSAPoram2fcS5gmNSuVH6yY8mUdXFTH/xlr5d\n2VjaEdigdR0YOYHKmdcp0mEULFcwvyIhJR2eE1xnfQKBgQDXsKpBIfF1dWeSjra/\nXSoYaunsKBgrow+tlwkawYJAsV94l02kt/fGwpa8ibqEkbHCb8kXEgvz9kjnW6a0\ngUPUvd/ODYLnVEsbRAFF0v70AS9xoCkuG0FuFovj58dg1aweR0AhGigy5jyoqsFd\n6Jn8yAHBF3S8/tg8XnzkAXpPewKBgQDEcwO8VxOYnQuyinQYRc5VNofCocEU01Vp\nu5tDFIdJkSzTh9S3+30nk7wz0wiMrpr7RgVP6FOLBSmIR1oRaSovooYC1I+Ze7Wd\nRTgCXAu3HAb+mK1LBX9MGoDQCpen2QqNm1Dqa64DX2jF/7gEOt2uia/EjOlhCXTT\nGKpb/aFDVQKBgQDFwOUoWG2giqcOWSi2ZT2uK4ATlGMsxxEd0Ad574dztuxYjSiT\n6FQVeN1pOUG4QDhhk8okC9jHsbv/2ykKACZnzDqBGiQ14jQGaKBeG2jD4L5WCEkZ\nS8X+oE9cAmrrnpxzGlJyxx+qIyvkXMJzTkq418u79LyEd4dcOil5ht1UNwKBgD+P\nRuIk+j4icapuiWlhDIUdg4dBdosaZUQ0YuOtPKhcxDgcdoKgZ7nqXrYVzWpXA+XQ\nnd9gt8b/AJULIOUJNZD78Ifx5hQupnAf+SMqTNANzWWKWGcxfCJPYOXux2qTGor+\neYufE0ocEHYfapZTxW23NptNTCUNPjMeg+AHi6mRAoGAc7R5iWWrhClQA4rhAypx\ni7QIo+ZJUz8cZD4Bmw5V9BLB31S+VHATTa7q+o57SC9XhFQVjm77ed0MQmXzix4B\n6UYkUJY6v7qVfnd/TSNaNt7RNF0caeKuvz+LuxVma7199CosWj0cwz8C+Zjmyob2\nE5pevTepa04FLOMVYYDkApI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "youth-marketing@static-factor-340820.iam.gserviceaccount.com",
+  "client_id": "111670948151711887456",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/youth-marketing%40static-factor-340820.iam.gserviceaccount.com"
+}
