@@ -73,7 +73,8 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
                     userName: user.userName,
                     address: user.address,
                     phoneNumber: user.phoneNumber, 
-                    userId: user.userId
+                    userId: user.userId,
+                    password: user.password
                     }
                     session[user.userId]= userSession[user.userId];
                     res.send({message: "user Authintecated",user: userSession[deviceId]});
@@ -117,15 +118,26 @@ router.post('/logout',cors(corsOptions),(req,res)=>{
     }
 });
 
-router.options("/getsession", cors(corsOptions));
-router.post('/getsession',cors(corsOptions),(req,res)=>{
+router.options("/checkoldpassword", cors(corsOptions));
+router.post('/checkoldpassword',cors(corsOptions),(req,res)=>{
     let keys= Object.keys(userSession).length;
     if(keys > 0){
         for(let key in userSession){
             if(key === req.body.deviceId){
+                bcrypt.compare(req.body.password,userSession[key].password).then(result=>{
+                    if (result) {
+                        res.send({message: "authintecated"});
+                        return; 
+                    } else {
+                        res.send({message: "wrong password"});
+                    }
+                })
+                .catch(err =>{
+                    res.send({message:"error in Comparing Password ", error: err});
+                })
                 
-                res.send({message: "authintecated", user: userSession[key]});
-                return;
+            }else{
+                res.send({message: "not authintecated"});
             }
         }
     }else{
