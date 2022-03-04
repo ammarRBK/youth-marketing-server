@@ -40,13 +40,12 @@ router.post('/signup',cors(corsOptions),(req,res)=>{
             email: email
         }
 
-        console.log(newUser);
         db.create(newUser).then(()=>{
             console.log("-------->done")
             res.send({message:"User saved with hashed password"});
         }).catch(err=>{
             console.log('cannot add user to db--------->', err.message);
-            res.send({message: 'cannot add user'})
+            res.send({message: 'validation error'})
         })
     })
     .catch(error =>{
@@ -103,36 +102,66 @@ router.post('/editprofile',cors(corsOptions),(req,res)=>{
     }
 
     if(newInfo.password === ""){
-        newInfo.password= userSession[deviceId].password;
-        newInfo['address']= userSession[deviceId].address;
-        newInfo.userName= newInfo.userName === '' ? userSession[deviceId].userName : newInfo.userName;
-        newInfo.phoneNumber= newInfo.phoneNumber === '' ? userSession[deviceId].phoneNumber : newInfo.phoneNumber;
-        newInfo.email= newInfo.email === null ? userSession[deviceId].email : newInfo.email;
+        bcrypt.hash(req.body.oldPassword,15).then(oldPasswordHashed=>{
+            newInfo.password= oldPasswordHashed;
+            newInfo['address']= userSession[deviceId].address;
+            newInfo.userName= newInfo.userName === '' ? userSession[deviceId].userName : newInfo.userName;
+            newInfo.phoneNumber= newInfo.phoneNumber === '' ? userSession[deviceId].phoneNumber : newInfo.phoneNumber;
+            newInfo.email= newInfo.email === null ? userSession[deviceId].email : newInfo.email;
 
-        res.send(JSON.stringify(updateUser(newInfo, deviceId)));
-    }
+            db.update(newInfo, {where:{userId: userSession[deviceId].userId}}).then(success=>{
+            console.log('updated the user info------->',success);
+            
+            res.send({message: 'updated user info'})
+            }).catch(err=>{
+                console.log('couldnt update the user--------->', err.message);
+                res.send({message: 'couldnt update the user'});
+            })
+        }).catch(err=>{
+            console.log(err.message)
+            res.send({message: 'cannot hash the password'})
+        })
+    }else{
+        bcrypt.hash(newInfo.password,15).then(hashedPassword=>{
+            newInfo.password= hashedPassword;
+            newInfo['address']= userSession[deviceId].address;
+            newInfo.userName= newInfo.userName === '' ? userSession[deviceId].userName : newInfo.userName;
+            newInfo.phoneNumber= newInfo.phoneNumber === '' ? userSession[deviceId].phoneNumber : newInfo.phoneNumber;
+            newInfo.email= newInfo.email === null ? userSession[deviceId].email : newInfo.email;
     
-    bcrypt.hash(newInfo.password, 15).then(hashedPassword=>{
-        newInfo.password= hashedPassword;
-        newInfo['address']= userSession[deviceId].address;
-        newInfo.userName= newInfo.userName === '' ? userSession[deviceId].userName : newInfo.userName;
-        newInfo.phoneNumber= newInfo.phoneNumber === '' ? userSession[deviceId].phoneNumber : newInfo.phoneNumber;
-        newInfo.email= newInfo.email === null ? userSession[deviceId].email : newInfo.email;
-
-        res.send(JSON.stringify(updateUser(newInfo, deviceId)));
-    })
-
+            db.update(newInfo, {where:{userId: userSession[deviceId].userId}}).then(success=>{
+            console.log('updated the user info------->',success);
+            res.send({message: 'updated user info'})
+            }).catch(err=>{
+                console.log('couldnt update the user--------->', err.message);
+                res.send({message: 'couldnt update the user'});
+            })
+        }).catch(err=>{
+            console.log(err.message)
+            res.send({message: 'cannot hash password'})
+        })
+       
+      
+    }
 });
 
-function updateUser(newInfo, deviceId){
-    db.update(newInfo, {where:{userId: userSession[deviceId].userId}}).then(success=>{
-        console.log('updated the user info------->',success);
-        return {message: 'updated user info'};
-    }).catch(err=>{
-        console.log('couldnt update the user--------->', err);
-        return {message: 'couldnt update the user'};
-    })
-}
+// function updateUser(newInfo, deviceId){
+//     db.update(newInfo, {where:{userId: userSession[deviceId].userId}}).then(success=>{
+//         console.log('updated the user info------->',success);
+//         return 'updated user info';
+//     }).catch(err=>{
+//         console.log('couldnt update the user--------->', err);
+//         return 'couldnt update the user';
+//     })
+// }
+
+// function getHashedPassword(password){
+//     bcrypt.hash(password,15).then(hashedPassword=>{
+//         return hashedPassword;
+//     }).catch(err=>{
+//         return err.message;
+//     })
+// }
 
 router.options('/checkloggedin',cors(corsOptions));
 router.post('/checkloggedin',cors(corsOptions),(req,res)=>{
