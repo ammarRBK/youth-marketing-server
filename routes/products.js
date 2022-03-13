@@ -73,8 +73,8 @@ router.post('/deleteproduct',cors(corsOptions),(req,res)=>{
   })
 });
 
-router.options('/editProduct', cors(corsOptions))
-router.post('/editProduct', cors(corsOptions),(req,res)=>{
+router.options('/editproduct', cors(corsOptions))
+router.post('/editproduct', cors(corsOptions),(req,res)=>{
   let proId= req.body.productId;
   let editedProduct= {
     productTitle: req.body.productTitle,
