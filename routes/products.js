@@ -118,6 +118,8 @@ router.post('/editimageproduct',  uploadFile.single('productImage'), cors(corsOp
     image: downloadableLink.webContentLink,
     imageId: uploadDriveResult.id
   }
+  
+  drive.deleteFileFromDrive(req.body.oldImageId);
 
   db.update(imageObject, {
     where:{
