@@ -73,8 +73,8 @@ router.post('/deleteproduct',cors(corsOptions),(req,res)=>{
   })
 });
 
-router.options('/editProduct',cors(corsOptions))
-router.post('/editProduct',cors(corsOptions),(req,res)=>{
+router.options('/editProduct', cors(corsOptions))
+router.post('/editProduct', cors(corsOptions),(req,res)=>{
   let proId= req.body.productId;
   let editedProduct= {
     productTitle: req.body.productTitle,
@@ -85,10 +85,10 @@ router.post('/editProduct',cors(corsOptions),(req,res)=>{
     expirationDate: new Date(req.body.expirationDate) || null,
     image: req.body.image,
     imageId: req.body.imageId,
-    productPrice: req.body.productPrice,
+    productPrice: parseFloat(req.body.productPrice),
     phoneNumber: req.body.phoneNumber,
-    userId: cliSession.userId,
-    productOwner: cliSession[req.body.deviceId].userName,
+    userId: req.body.userId,
+    productOwner: req.body.userName,
     productCategory: req.body.productCategory
   }
 
@@ -104,6 +104,32 @@ router.post('/editProduct',cors(corsOptions),(req,res)=>{
     res.send({message: "cannot Edit"})
   })
 
+});
+
+router.options('/editimageproduct', uploadFile.single('productImage'), cors(corsOptions));
+router.post('/editimageproduct',  uploadFile.single('productImage'), cors(corsOptions), async(req,res)=>{
+  let productId= req.body.productId;
+  var filename= tempName;
+  
+  var uploadDriveResult= await drive.uploadFile(filename)
+  const downloadableLink= await drive.getDownloadLink(uploadDriveResult.id);
+
+  let imageObject={
+    image: downloadableLink.webContentLink,
+    imageId: uploadDriveResult.id
+  }
+
+  db.update(imageObject, {
+    where:{
+      id: productId
+    }
+  }).then(success=>{
+    console.log('upated product image successfully----->',success);
+    res.send({message: 'upated product image successfully'});
+  }).catch(err=>{
+    console.log('cannot update the image because---->',err.message);
+    res.send({message: 'cannot update the image'});
+  })
 });
 
 router.options('/getproducts',cors(corsOptions))
