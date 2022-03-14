@@ -88,7 +88,7 @@ router.post('/editproduct', cors(corsOptions),(req,res)=>{
     productPrice: parseFloat(req.body.productPrice),
     phoneNumber: req.body.phoneNumber,
     userId: req.body.userId,
-    productOwner: req.body.userName,
+    productOwner: req.body.productOwner,
     productCategory: req.body.productCategory
   }
 
