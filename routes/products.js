@@ -98,7 +98,15 @@ router.post('/editproduct', cors(corsOptions),(req,res)=>{
     }
   }).then(success=>{
     console.log("----->Edited '\n'",success)
-    res.send({message: "Product Edited successfully"});
+    db.findOne({where:{
+      id: proId
+    }}).then(product=>{
+      res.send({message: "Product Edited successfully", product: product});
+    }).catch(err=>{
+      console.log('cannot find the product',err.message)
+      res.send({message: "cannot Edit"})
+    })
+    
   }).catch(err=>{
     console.log("-----> cannot Edit '\n'",err)
     res.send({message: "cannot Edit"})
@@ -127,7 +135,15 @@ router.post('/editimageproduct',  uploadFile.single('productImage'), cors(corsOp
     }
   }).then(success=>{
     console.log('upated product image successfully----->',success);
-    res.send({message: 'upated product image successfully'});
+    db.findOne({where:{
+      id: productId
+    }}).then(product=>{
+      res.send({message: 'upated product image successfully', product: product});
+    }).catch(err=>{
+      console.log('cannot find user',err.message)
+      res.send({message: "cannot find user"})
+    })
+    
   }).catch(err=>{
     console.log('cannot update the image because---->',err.message);
     res.send({message: 'cannot update the image'});
