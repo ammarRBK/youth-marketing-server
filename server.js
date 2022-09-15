@@ -40,6 +40,24 @@ app.listen(process.env.PORT ||3000,()=>{
   console.log("app is ready")
 })
 
+// // Import the functions you need from the SDKs you need
+// import { initializeApp } from "firebase/app";
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+
+// // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: "AIzaSyD1fnhsRF_daPim_g50D4bz7Uf7h4kPkNg",
+//   authDomain: "youth-marketing-server.firebaseapp.com",
+//   projectId: "youth-marketing-server",
+//   storageBucket: "youth-marketing-server.appspot.com",
+//   messagingSenderId: "391850460375",
+//   appId: "1:391850460375:web:b2967c9181a8ca4f769c92"
+// };
+
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+
 app.get('/api',(req,res)=>{
   res.send({message:"hello Ammar"})
 })

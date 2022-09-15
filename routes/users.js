@@ -4,7 +4,6 @@ var router= express.Router();
 var bcrypt= require('bcrypt');
 var db= require('../database/usersModel').Users;
 var cors= require('cors');
-var corsOptions= require('../server').corsOptions;
 
 var userSession= {};
 var session= require('express-session');
