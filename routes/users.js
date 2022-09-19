@@ -20,7 +20,7 @@ var corsOptions={
     "optionsSuccessStatus": 200
 }
 
-// router.options('/verifyphone',cors(corsOptions));
+
 // router.post('/verifyphone',cors(corsOptions), (req,res)=>{
 //     let phoneNumber= req.body.phoneNumber;
 //     let appVerifier= req.body.recaptchaVerifier;
