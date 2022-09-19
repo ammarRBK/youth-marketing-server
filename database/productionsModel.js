@@ -38,7 +38,7 @@ const Productions= sequelize.define('productions',{
         allowNull: false
     },
     phoneNumber:{
-        type: DataTypes.INTEGER
+        type: DataTypes.CHAR(50)
     },
     productOwner:{
         type: DataTypes.STRING(100),

@@ -20,6 +20,24 @@ var corsOptions={
     "optionsSuccessStatus": 200
 }
 
+// router.options('/verifyphone',cors(corsOptions));
+// router.post('/verifyphone',cors(corsOptions), (req,res)=>{
+//     let phoneNumber= req.body.phoneNumber;
+//     let appVerifier= req.body.recaptchaVerifier;
+
+//     firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+//     .then((confirmationResult) => {
+//       // SMS sent. Prompt user to type the code from the message, then sign the
+//       // user in with confirmationResult.confirm(code).
+//         //   window.confirmationResult = confirmationResult;
+      
+//       // ...
+//     }).catch((error) => {
+//       // Error; SMS not sent
+//       // ...
+//     });
+// })
+
 
 router.options('/signup',cors(corsOptions));
 router.post('/signup',cors(corsOptions),(req,res)=>{
