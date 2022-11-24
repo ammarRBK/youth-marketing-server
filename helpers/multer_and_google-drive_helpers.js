@@ -4,19 +4,6 @@ var path= require('path');
 
 var temp_image_name= '';
 var downloadLink= '';
-// function deletefiles(){
-//   fs.readdir(directory, (err, files) => {
-//     if (err) throw err;
-  
-//     for (const file of files) {
-//       fs.unlink(path.join(directory, file), err => {
-//         if (err) throw err;
-//       });
-//     }
-//   });
-// }
-
-// deletefiles();
 
 
 var storage= multer.diskStorage({
@@ -114,27 +101,7 @@ const driveFunctions= {
   }
 }
 
-// const imageFilter= function(req, file, cb){
-//   console.log(file.mimetype);
-//     if (file.mimetype.startsWith("image")) {
-//       cb(null, true);
-//     } else {
-//       cb("Please upload only images.", false);
-//     }
-// };
-// {fileFilter:imageFilter}
 
-// const blobtoimage = (blob) => {
-//   return new Promise(resolve => {
-//     const url = URL.createObjectURL(Buffer.from(blob, 'binary'))
-//     let img = new Image()
-//     img.onload = () => {
-//       URL.revokeObjectURL(url)
-//       resolve(img)
-//     }
-//     img.src = url
-//   })
-// }
 var name= {tempName: temp_image_name, downloadLink: downloadLink};
 var uploadFile= multer({storage:storage})
 module.exports= {uploadFile:uploadFile, driveFunctions: driveFunctions, name};
