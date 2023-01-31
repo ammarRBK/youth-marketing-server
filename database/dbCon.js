@@ -1,8 +1,8 @@
 const { Sequelize }= require("sequelize");
 
 const sequelize= new Sequelize("youthmarketing", "ammar", "ammar@1234",{
-    host: 'mysql-97300-0.cloudclusters.net',
-    port: '17442',
+    host: 'mysql-108678-0.cloudclusters.net',
+    port: '10271',
     dialect: 'mysql',
     logging: false
 });
