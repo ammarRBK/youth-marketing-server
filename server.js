@@ -15,13 +15,13 @@ var products = require('./routes/products').router;
 var users= require('./routes/users').router;
 var db= require('./database/dbsetup');
 
-var session= require('express-session');
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}));
+// var session= require('express-session');
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: true }
+// }));
 
 
 app.use(logger('dev'));

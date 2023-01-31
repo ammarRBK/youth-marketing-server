@@ -16,13 +16,13 @@ var corsOptions= {
 };
 
 var cliSession= require('./users').userSession;
-var session= require('express-session');
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}));
+// var session= require('express-session');
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: true }
+// }));
 
 router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions))
 router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),async (req,res)=>{
