@@ -11,4 +11,3 @@ node_modules
 .wafpickle-*
 config.gypi
 CVS
-npm-debug.log
