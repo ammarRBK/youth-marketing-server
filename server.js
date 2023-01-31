@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var fs= require('fs');
-var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors= require('cors')
 app.use(cors({
