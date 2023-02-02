@@ -24,7 +24,7 @@ app.use(session({
 }));
 
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json({limit:"50mb"}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:'true'}));
 app.use(express.static(path.join(__dirname, './life-melody-server')));
