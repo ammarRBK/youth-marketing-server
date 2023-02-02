@@ -6,13 +6,13 @@ var db= require('../database/usersModel').Users;
 var cors= require('cors');
 
 var userSession= {};
-// var session= require('express-session');
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: { secure: true }
-// }));
+var session= require('express-session');
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
 
 var corsOptions={
     "Access-Control-Allow-Origin": "*",

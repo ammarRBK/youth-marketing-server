@@ -15,16 +15,16 @@ var products = require('./routes/products').router;
 var users= require('./routes/users').router;
 var db= require('./database/dbsetup');
 
-// var session= require('express-session');
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: { secure: true }
-// }));
+var session= require('express-session');
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
 
 
-// app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(bodyParser.json({limit:"50mb"}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:'true'}));
 app.use(express.static(path.join(__dirname, './life-melody-server')));
