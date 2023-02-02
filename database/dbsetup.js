@@ -15,7 +15,7 @@ Productions.belongsTo(Users);
 
 sequelize.sync()
     .then((result=>{
-        console.log(result);
+        console.log("Database Connection Successed");
     }))
     .catch((err)=>{
         console.log(err);
