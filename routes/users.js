@@ -101,6 +101,7 @@ router.post('/signin',cors(corsOptions),(req,res)=>{
                 }
             })
             .catch(err =>{
+                console.log(`-----------------> Password Compare ERROR \n`,err);
                 res.send({message:"error in Comparing Password ", error: err});
             })
         }
