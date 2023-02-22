@@ -11,3 +11,4 @@ node_modules
 .wafpickle-*
 config.gypi
 CVS
+cdk-eb-infra
