@@ -10,6 +10,8 @@
   "author": "Ammar Al-Ahmad",
   "license": "MIT",
   "dependencies": {
+    "@aws-cdk/aws-elasticbeanstalk": "^1.194.0",
+    "@aws-cdk/aws-iam": "^1.194.0",
     "@aws-cdk/aws-s3-assets": "^1.194.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
