@@ -24,6 +24,7 @@ app.use(session({
   cookie: { secure: true }
 }));
 
+
 router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions))
 router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),async (req,res)=>{
   var filename= tempName;
