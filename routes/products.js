@@ -1,6 +1,7 @@
 var express= require('express');
 var app= express();
 var path= require('path');
+var moment= require('moment');
 var router= express.Router();
 var db= require('../database/productionsModel').Productions;
 var uploadFile= require('../helpers/multer_and_google-drive_helpers').uploadFile;
@@ -37,8 +38,8 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),as
     productDisciption: req.body.productDescription,
     productQuantity: parseFloat(req.body.productQuantity),
     availableUnits: req.body.availableUnits || 0,
-    productDate: req.body.productDate != '' ? moment(new Date(req.body.productDate)).format : null,
-    expirationDate: req.body.expirationDate != '' ? moment(new Date(req.body.expirationDate)).format : null,
+    productDate: req.body.productDate != '' ? moment(new Date(req.body.productDate)).format() : null,
+    expirationDate: req.body.expirationDate != '' ? moment(new Date(req.body.expirationDate)).format() : null,
     image: downloadableLink.webContentLink,
     imageId: uploadDriveResult.id,
     productPrice: parseFloat(req.body.productPrice),
