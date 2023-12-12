@@ -51,6 +51,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),as
   db.create(Production).then(()=>{
     res.send({message:"production added successfully"});
   }).catch(err=>{
+    console.log('----------->', Production.productDate);
     console.log("Error adding the product \n",err+"\n")
     res.send({Error:err,message:"cannot add the product"});
   })
