@@ -1,7 +1,8 @@
+// require datatypes object
 const {Sequelize, DataTypes}= require("sequelize");
 var sequelize= require("./dbCon").sequelize;
 
-
+// create productions table with fields requierments
 const Productions= sequelize.define('productions',{
     productTitle:{
         type: DataTypes.STRING(100),
@@ -49,7 +50,9 @@ const Productions= sequelize.define('productions',{
         allowNull: false
     }
 },{
+//don’t allow table name editing
     freezeTableName: true
 });
 
+// export productions table schema
 module.exports= {Productions};

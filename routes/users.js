@@ -21,24 +21,6 @@ var corsOptions={
 }
 
 
-// router.post('/verifyphone',cors(corsOptions), (req,res)=>{
-//     let phoneNumber= req.body.phoneNumber;
-//     let appVerifier= req.body.recaptchaVerifier;
-
-//     firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-//     .then((confirmationResult) => {
-//       // SMS sent. Prompt user to type the code from the message, then sign the
-//       // user in with confirmationResult.confirm(code).
-//         //   window.confirmationResult = confirmationResult;
-      
-//       // ...
-//     }).catch((error) => {
-//       // Error; SMS not sent
-//       // ...
-//     });
-// })
-
-
 router.options('/signup',cors(corsOptions));
 router.post('/signup',cors(corsOptions),(req,res)=>{
     let userName= req.body.userName;
@@ -46,7 +28,7 @@ router.post('/signup',cors(corsOptions),(req,res)=>{
     let phoneNumber= req.body.phoneNumber;
     let address= req.body.address;
     let email= req.body.email || null;
-
+// encode the client password
     bcrypt.hash(password,15)
     .then((hashedPassword)=>{
         var newUser = {
@@ -56,7 +38,7 @@ router.post('/signup',cors(corsOptions),(req,res)=>{
             address: address,
             email: email
         }
-
+// save new user in the database
         db.create(newUser).then(()=>{
             console.log("-------->done")
             res.send({message:"User saved with hashed password"});
@@ -75,17 +57,21 @@ router.options('/signin',cors(corsOptions));
 router.post('/signin',cors(corsOptions),(req,res)=>{
     let phoneNumber= req.body.phoneNumber;
     let password= req.body.password;
+// get mobile device id from client request object
     let deviceId= req.body.deviceId;
-
+// search for the user
     db.findOne({
         where:{phoneNumber: phoneNumber}
     }).then(user=>{
-        
+ 
         if(!user){
+// user not found
             res.send({message: "user is not in database"})
         }else{
+// check the password came from client if it equals the user password
             bcrypt.compare(password,user.password).then(result=>{
                 if (result) {
+// create user session object with device id as key value
                     userSession[deviceId]= {
                     userName: user.userName,
                     address: user.address,
@@ -120,6 +106,7 @@ router.post('/editprofile',cors(corsOptions),(req,res)=>{
     }
 
     if(newInfo.password === ""){
+// make sure the password is correct then update the user with data come from client
         bcrypt.hash(req.body.oldPassword,15).then(oldPasswordHashed=>{
             newInfo.password= oldPasswordHashed;
             newInfo['address']= userSession[deviceId].address;
@@ -161,31 +148,16 @@ router.post('/editprofile',cors(corsOptions),(req,res)=>{
        
       
     }
-});
-
-// function updateUser(newInfo, deviceId){
-//     db.update(newInfo, {where:{userId: userSession[deviceId].userId}}).then(success=>{
-//         console.log('updated the user info------->',success);
-//         return 'updated user info';
-//     }).catch(err=>{
-//         console.log('couldnt update the user--------->', err);
-//         return 'couldnt update the user';
-//     })
-// }
-
-// function getHashedPassword(password){
-//     bcrypt.hash(password,15).then(hashedPassword=>{
-//         return hashedPassword;
-//     }).catch(err=>{
-//         return err.message;
-//     })
-// }
+}); 
 
 router.options('/checkloggedin',cors(corsOptions));
 router.post('/checkloggedin',cors(corsOptions),(req,res)=>{
     let deviceId= req.body.deviceId;
+
     let keys= Object.keys(userSession).length;
+// check if there users logged in
     if(keys > 0){
+// loop over session Object
         for(const device in userSession){
             console.log("ديفايس ايديييييييي---------- \n", deviceId)
             if(device === deviceId){
@@ -204,6 +176,7 @@ router.options("/logout", cors(corsOptions));
 router.post('/logout',cors(corsOptions),(req,res)=>{
     for(let key in userSession){
         if(key === req.body.deviceId){
+// delete user session
             delete userSession[key];
             res.send({message: "logged out"});
         }
@@ -235,6 +208,23 @@ router.post('/checkoldpassword',cors(corsOptions),(req,res)=>{
     }else{
         res.send({message: "not authintecated"});
     }
+})
+// check if the phone number is stored in the database
+router.options('/checkuser', cors(corsOptions));
+router.post('/checkuser',cors(corsOptions), (req, res)=>{
+    let phoneNumber= req.body.phoneNumber;
+    db.findOne({
+        where: {phoneNumber: phoneNumber}
+    })
+    .then(user=>{
+        if(!user){
+            res.send({message: 'user not in database'});
+        }else{
+            res.send({message: 'user in the database'})
+        }
+    }).catch(err=>{
+        res.send({message: 'error while filtering'});
+    })
 })
 
 module.exports= {router,userSession,cors,corsOptions};

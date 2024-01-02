@@ -1,3 +1,4 @@
+// multer library to deal with product image files
 var multer= require('multer');
 var fs= require('fs');
 var path= require('path');
@@ -5,7 +6,7 @@ var path= require('path');
 var temp_image_name= '';
 var downloadLink= '';
 
-
+// initiate multer settings by creating the dist path and file name
 var storage= multer.diskStorage({
   destination: function (req,file,callback){
     callback(null, '.');
@@ -16,12 +17,9 @@ var storage= multer.diskStorage({
     callback(null, filename);
   }
 });
-
+// google drive api connection settings
 const {google}= require('googleapis');
-// const clientId= '93409857556-qm6lqqrl4g2hd1ddoife91dgd3dq1p4f.apps.googleusercontent.com';
-// const clientSecretId= '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';
-// const redirectUrl= 'https://developers.google.com/oauthplayground';
-// const refreshToken= '1//04AIjU3ybyiNuCgYIARAAGAQSNwF-L9IrB-AMd7wbo-94pcDAkbB8AZyZX-pH_CMIAIE0SDFA62_BFe5lfnFlVbgbYUsvHoE3MmI';
+
 const authKeyFilePath= 'helpers/static-factor-340820-0d1718039501.json';
 const scopes= ['https://www.googleapis.com/auth/drive'];
 
@@ -29,8 +27,6 @@ const oauth2Client = new google.auth.GoogleAuth({
   keyFilename: authKeyFilePath,
   scopes: scopes
 })
-
-// oauth2Client.setCredentials({ refresh_token: refreshToken });
 
 const drive = google.drive({
   version: 'v3',
@@ -40,7 +36,6 @@ const drive = google.drive({
 
 const driveFunctions= {
   uploadFile: async function(fileName){
-    // var filePath= path.join('.','/tempimages','/'+fileName)
     try {
       const response = await drive.files.create({
         requestBody: {
@@ -58,7 +53,6 @@ const driveFunctions= {
       fs.unlink(temp_image_name, err=>{
         if (err) throw err
       })
-      // drivefileId= response.data.id
       return response.data;
     } catch (error) {
       console.log('-------------> ERROR',error.message)

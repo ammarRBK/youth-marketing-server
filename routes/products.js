@@ -1,13 +1,16 @@
 var express= require('express');
 var app= express();
-var path= require('path');
-var moment= require('moment');
+
 var router= express.Router();
+// require productions table schema 
 var db= require('../database/productionsModel').Productions;
+// multer settings constructor
 var uploadFile= require('../helpers/multer_and_google-drive_helpers').uploadFile;
+// drive functions (uplaod and delete files)
 var drive= require('../helpers/multer_and_google-drive_helpers').driveFunctions;
 var tempName= require('../helpers/multer_and_google-drive_helpers').name.tempName;
-var downloadLink= require('../helpers/multer_and_google-drive_helpers').name.downloadLink;
+
+// cors settings for contacting with client 
 var cors= require('./users').cors;
 var corsOptions= {
   "Access-Control-Allow-Origin": "*",
@@ -15,7 +18,7 @@ var corsOptions= {
   "optionsSuccessStatus": 200,
   "Content-Type": "multipart/form-data"
 };
-
+// get session to user details with new products details
 var cliSession= require('./users').userSession;
 var session= require('express-session');
 app.use(session({
@@ -25,14 +28,15 @@ app.use(session({
   cookie: { secure: true }
 }));
 
-
+//using mukter to prepare a single file to uplaod image to google drive
 router.options('/addProduct',uploadFile.single('productImage'),cors(corsOptions))
 router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),async (req,res)=>{
   var filename= tempName;
-  
+// this var runs uploadFile to Drive function and store the response came from the API 
   var uploadDriveResult= await drive.uploadFile(filename)
+// gets downloadableLink
   const downloadableLink= await drive.getDownloadLink(uploadDriveResult.id)
-  // downloadLink= driveFileDownloadLink['webContentLink']
+// new product details
   let Production= {
     productTitle: req.body.productTitle,
     productDisciption: req.body.productDescription,
@@ -48,6 +52,7 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),as
     productOwner: cliSession[req.body.deviceId].userName,
     productCategory: req.body.productCategory
   };
+// save product in the database
   db.create(Production).then(()=>{
     res.send({message:"production added successfully"});
   }).catch(err=>{
@@ -60,14 +65,17 @@ router.post('/addProduct',uploadFile.single('productImage'),cors(corsOptions),as
 
 router.options('/deleteproduct',cors(corsOptions))
 router.post('/deleteproduct',cors(corsOptions),(req,res)=>{
+// get product id and product’s image id from request body
   let imageId= req.body.imageId;
   let proId= req.body.productId;
+// delete product record from the database 
   db.destroy({
     where:{
       id: proId
     }
   }).then(success=>{
     console.log('------->deleted \n',success);
+// if deletion success delete image from google drive 
     drive.deleteFileFromDrive(imageId);
     res.send({message: "Product deleted"});
   }).catch(err=>{
@@ -79,6 +87,7 @@ router.post('/deleteproduct',cors(corsOptions),(req,res)=>{
 router.options('/editproduct', cors(corsOptions))
 router.post('/editproduct', cors(corsOptions),(req,res)=>{
   let proId= req.body.productId;
+// new details for the product
   let editedProduct= {
     productTitle: req.body.productTitle,
     productDisciption: req.body.productDisciption,
@@ -94,13 +103,14 @@ router.post('/editproduct', cors(corsOptions),(req,res)=>{
     productOwner: req.body.productOwner,
     productCategory: req.body.productCategory
   }
-
+// update product 
   db.update(editedProduct,{
     where:{
       id: proId
     }
   }).then(success=>{
     console.log("----->Edited '\n'",success)
+// send the product after edition to the client
     db.findOne({where:{
       id: proId
     }}).then(product=>{
@@ -129,15 +139,16 @@ router.post('/editimageproduct',  uploadFile.single('productImage'), cors(corsOp
     image: downloadableLink.webContentLink,
     imageId: uploadDriveResult.id
   }
-  
+// delete old image from the drive using the id came from client
   drive.deleteFileFromDrive(req.body.oldImageId);
-
+// update the image stored with it’s product
   db.update(imageObject, {
     where:{
       id: productId
     }
   }).then(success=>{
     console.log('upated product image successfully----->',success);
+// send the updated product to the client
     db.findOne({where:{
       id: productId
     }}).then(product=>{
@@ -152,7 +163,7 @@ router.post('/editimageproduct',  uploadFile.single('productImage'), cors(corsOp
     res.send({message: 'cannot update the image'});
   })
 });
-
+// sends all products to the client
 router.options('/getproducts',cors(corsOptions))
 router.get('/getproducts',cors(corsOptions),(req,res)=>{
   var prods=[];
@@ -192,19 +203,22 @@ router.get('/getproducts',cors(corsOptions),(req,res)=>{
     });
   
 })
-
+// get only products belongs the user 
 router.options('/getUserProducts',cors(corsOptions))
 router.post('/getUserProducts',cors(corsOptions),(req,res)=>{
   let deviceId= req.body.deviceId
+// check if there is a user session
   if(Object.keys(cliSession).length > 0){
+// loop over session objects
     for(let key in cliSession){
+// if client device id is stored in session 
       if(key === deviceId){
         db.findAll({
           where:{
             userId: cliSession[key].userId
           }
         }).then(pros=>{
-          
+// if no products found send a message to the client, if there is products send them
           pros.length === 0 ? res.send({userName: cliSession[key].userName,message:"you dont have products yet"}) : res.send({userName: cliSession[key].userName, prods:JSON.stringify(pros)});
         })
       }

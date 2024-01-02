@@ -1,6 +1,6 @@
 const {Sequelize, DataTypes}= require("sequelize");
 var sequelize= require("./dbCon").sequelize;
-
+// create users table with fields requierments
 const Users= sequelize.define('users',{
     userId:{
         type: DataTypes.INTEGER,
@@ -32,7 +32,8 @@ const Users= sequelize.define('users',{
         allowNull: true
     }
 },{
+//don’t allow table name editing
     freezeTableName: true
 });
-
+// export users table schema
 module.exports={Users}
