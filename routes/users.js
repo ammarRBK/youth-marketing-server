@@ -225,6 +225,33 @@ router.post('/checkuser',cors(corsOptions), (req, res)=>{
     }).catch(err=>{
         res.send({message: 'error while filtering'});
     })
-})
+});
+
+router.options('/changepassword', cors(corsOptions));
+router.post('/changepassword',cors(corsOptions), (req, res)=>{
+    let newPassword= req.body.newPassword;
+    let phoneNumber= req.body.phoneNumber;
+// check password length if 8 or more hash the new password and update in the database
+    if(newPassword.length < 8){
+        res.send({message: 'please provide valid password'});
+    } else {
+// hash new password 
+        bcrypt.hash(newPassword, 15).then(hashedPassword=>{
+// update user info with new hashed password
+            db.update({password: newPassword}, {where: {phoneNumber: phoneNumber}}).then(success =>{
+                console.log('password updated ----> ', success);
+                res.send({message: 'password changed'});
+// error on updating password during database query
+            }).catch(err =>{
+                console.log('couldn’t update the password in the Database---->', err.message);
+                res.send({message: 'password didnt update error in database'});
+            })
+// error during hash the new password
+        }).catch(err =>{
+            console.log('couldn’t hash the password', err);
+            res.send({message: 'password did not hash'});
+        })
+    }
+});
 
 module.exports= {router,userSession,cors,corsOptions};
