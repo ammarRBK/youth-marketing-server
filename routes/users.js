@@ -238,7 +238,7 @@ router.post('/changepassword',cors(corsOptions), (req, res)=>{
 // hash new password 
         bcrypt.hash(newPassword, 15).then(hashedPassword=>{
 // update user info with new hashed password
-            db.update({password: newPassword}, {where: {phoneNumber: phoneNumber}}).then(success =>{
+            db.update({password: hashedPassword}, {where: {phoneNumber: phoneNumber}}).then(success =>{
                 console.log('password updated ----> ', success);
                 res.send({message: 'password changed'});
 // error on updating password during database query
