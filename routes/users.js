@@ -233,7 +233,7 @@ router.post('/changepassword',cors(corsOptions), (req, res)=>{
     let phoneNumber= req.body.phoneNumber;
 // check password length if 8 or more hash the new password and update in the database
     if(newPassword.length < 8){
-        res.send({message: 'please provide valid password', newPassword: newPassword});
+        res.send({message: 'please provide valid password'});
     } else {
 // hash new password 
         bcrypt.hash(newPassword, 15).then(hashedPassword=>{
